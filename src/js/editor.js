@@ -17,7 +17,7 @@
 
             $("#" + this.options.editorAreaId).append(editorObj);
             $("#" + this.options.saveBtnId).click(function() {
-                console.log(self.buildJSON());
+                console.log(self.buildJSONString());
             });
         },
 
@@ -129,9 +129,12 @@
         /**
          * JSON
          */
+        buildJSONString : function() {
+            return JSON.stringify(this.buildJSON());
+        },
         buildJSON : function() {
             var rootEditor = $("#" + this.options.editorAreaId).children();
-            return JSON.stringify(this.buildJSONRecursive(rootEditor, {}));
+            return this.buildJSONRecursive(rootEditor, {});
         },
         buildJSONRecursive : function(editor) {
             if (editor.hasClass("stringEditor")) {
