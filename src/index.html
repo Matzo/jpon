@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSONEditor</title>
+<link rel="stylesheet" href="css/jsoned.css">
+<script type="text/javascript" src="lib/jquery.min.js"></script>
+<link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+<script src="lib/bootstrap/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="js/editor.js"></script>
+<script>
+$(function() {
+    var template = {
+        type:"map",
+        value:[
+            {
+                name:"announce",
+                type:"list",
+                expandable:true,
+                min:1,
+                max:10,
+                value:{
+                    type:"map",
+                    value:[
+                        { name:"date",   type:"string" },
+                        { name:"title",  type:"string" },
+                        { name:"url",    type:"string" },
+                        { name:"openIn", type:"select", value:["window", "iframe", ""] },
+                        { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
+                    ]
+                }
+            },
+            {
+                name:"maintenance",
+                type:"list",
+                expandable:true,
+                min:1,
+                max:10,
+                value:{
+                    type:"map",
+                    value:[
+                        { name:"date",   type:"string" },
+                        { name:"title",  type:"string" },
+                        { name:"url",    type:"string" },
+                        { name:"openIn", type:"select", value:["window", "iframe", ""] },
+                        { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
+                    ]
+                }
+            },
+        ]
+    }
+
+    var value = {
+        "announce" : [
+            {
+                "date" : "2013/01/01",
+                "title" : "A Happy New Year",
+                "url" : "https://www.google.co.jp/search?q=A+Happy+New+Year",
+                "openIn" : "window",
+                "target" : ["android","windows","ios","web"]
+            }
+            ,{
+                "date" : "2012/12/31",
+                "title" : "New Year's Eve",
+                "url" : "https://www.google.co.jp/search?q=New+Year's+Eve",
+                "openIn" : "iframe",
+                "target" : ["web"]
+            }
+        ],
+        "maintenance" : [
+            {
+                "date" : "2012/12/18",
+                "title" : "Service Maintenance 1",
+                "url" : "https://www.google.co.jp/search?q=Service+Maintenance",
+                "openIn" : "window",
+                "target" : ["android","windows","ios"]
+            }
+           ,{
+                "date" : "2012/12/26",
+                "title" : "Service Maintenance 2",
+                "url" : "https://www.google.co.jp/search?q=Service+Maintenance+2",
+                "openIn" : "window",
+                "target" : ["android","windows","ios","web"]
+            }
+        ]
+    };
+
+    var editor = new jsoned.Editor();
+    editor.initEdior(template, value);
+
+    var storage = new jsoned.Storage();
+});
+</script>
+</head>
+<body class="container-fluid">
+
+<header class="page-header">
+<h1>JSONED<span class="dark_color">ITOR</span></h1>
+</header>
+
+<section id="dragAndDropBox">
+<div>Drag & Drop Here!</div>
+</section>
+
+<section id="editor">
+</section>
+
+<section id="controller">
+<button id="saveBtn" type="button" class="btn btn-primary">save</button>
+</section>
+<footer><small>Copyright &copy; 2013 Matzo All Rights Reserved.</small></footer>
+</body>
+</html>

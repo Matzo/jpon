@@ -1,0 +1,43 @@
+.dark_color {
+    color:lightgray
+}
+h1:after {
+    clear: both;
+}
+#editor {
+}
+
+#editor ul.listEditor {
+    border: 1px solid #f5f5f5;
+    list-style: none;
+}
+#editor ul.selectMultipleEditor li,
+#editor ul.selectEditor li {
+    background-color: #f5f5f5;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+footer {
+    border-top: 1px solid #eee;
+    padding:10px;
+    text-align: center
+}
+
+#dragAndDropBox {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+
+    padding:5px;
+    background-color: #f5f5f5;
+    border: 5px dashed #ccc;
+    border: 5px dashed rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+}
+#dragAndDropBox:hover {
+    background-color: lightyellow;
+}
