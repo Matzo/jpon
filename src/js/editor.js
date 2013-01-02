@@ -5,18 +5,25 @@
 
     jsoned.Editor = function(options) {
         this.options = $.extend({
-            editorAreaId : "editor"
+            editorAreaId : "editor",
+            saveBtnId : "saveBtn"
         }, options);
     }
 
     jsoned.Editor.prototype = {
-        output : {},
         initEdior : function(template, value) {
             var editorObj = this.buildEditor(template, value);
+            var self = this;
 
-            $("#editor").append(editorObj);
+            $("#" + this.options.editorAreaId).append(editorObj);
+            $("#" + this.options.saveBtnId).click(function() {
+                console.log(self.buildJSON());
+            });
         },
 
+        /**
+         * Editor
+         */
         buildEditor : function(template, value) {
             var result = null;
             if (template.type == "string") {
@@ -119,28 +126,63 @@
             }
         })(),
 
+        /**
+         * JSON
+         */
         buildJSON : function() {
             var rootEditor = $("#" + this.options.editorAreaId).children();
-            return this.buildJSONRecursive(rootEditor, {});
+            return JSON.stringify(this.buildJSONRecursive(rootEditor, {}));
         },
-        buildJSONRecursive : function(editor, obj) {
+        buildJSONRecursive : function(editor) {
             if (editor.hasClass("stringEditor")) {
-                this.buildJSONFromString(editor, obj);
+                return this.buildJSONFromString(editor);
             } else if (editor.hasClass("mapEditor")) {
-                this.buildJSONFromMap(editor, obj);
+                return this.buildJSONFromMap(editor);
             } else if (editor.hasClass("listEditor")) {
-                this.buildJSONFromList(editor, obj);
+                return this.buildJSONFromList(editor);
             } else if (editor.hasClass("selectEditor")) {
-                this.buildJSONFromSelect(editor, obj);
+                return this.buildJSONFromSelect(editor);
             } else if (editor.hasClass("selectMultipleEditor")) {
-                this.buildJSONFromSelectMultiple(editor, obj);
+                return this.buildJSONFromSelectMultiple(editor);
             }
         },
-        buildJSONFromString : function(editor, obj) {},
-        buildJSONFromMap : function(editor, obj) {},
-        buildJSONFromList : function(editor, obj) {},
-        buildJSONFromSelect : function(editor, obj) {},
-        buildJSONFromSelectMultiple : function(editor, obj) {}
+        buildJSONFromString : function(editor) {
+            return editor.val();
+        },
+        buildJSONFromMap : function(editor) {
+            var obj = {};
+            var children = editor.children();
+
+            for (var i = 0; i < children.size(); i+=2) {
+                var key = children.get(i).innerText;
+                var child = $(children.get(i+1)).children();
+                var value = this.buildJSONRecursive(child);
+                obj[key] = value;
+            }
+
+            return obj;
+        },
+        buildJSONFromList : function(editor) {
+            var list = [];
+            var children = editor.children();
+            for (var i = 0; i < children.size(); i++) {
+                var child = $(children.get(i)).children();
+                list.push(this.buildJSONRecursive(child));
+            }
+            return list;
+        },
+        buildJSONFromSelect : function(editor) {
+            var result = $("input[type=radio]:checked", editor).val();
+            return result;
+        },
+        buildJSONFromSelectMultiple : function(editor) {
+            var checkedObj = $("input[type=checkbox]:checked", editor);
+            var list = [];
+            $.each(checkedObj, function() {
+                list.push(this.value);
+            });
+            return list;
+        }
     }
 
 })(this.jQuery);
