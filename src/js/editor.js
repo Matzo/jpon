@@ -5,20 +5,17 @@
 
     jsoned.Editor = function(options) {
         this.options = $.extend({
-            editorAreaId : "editor",
-            saveBtnId : "saveBtn"
+            editorAreaId : "editor"
         }, options);
     }
 
     jsoned.Editor.prototype = {
-        initEdior : function(template, value) {
+        initEditor : function(template, value) {
             var editorObj = this.buildEditor(template, value);
             var self = this;
 
+            $("#" + this.options.editorAreaId).html("");
             $("#" + this.options.editorAreaId).append(editorObj);
-            $("#" + this.options.saveBtnId).click(function() {
-                console.log(self.buildJSONString());
-            });
         },
 
         /**

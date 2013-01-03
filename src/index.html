@@ -10,6 +10,7 @@
 
 <script type="text/javascript" src="js/editor.js"></script>
 <script type="text/javascript" src="js/storage.js"></script>
+<script type="text/javascript" src="js/jsoned.js"></script>
 <script>
 $(function() {
     var template = {
@@ -87,10 +88,7 @@ $(function() {
         ]
     };
 
-    var editor = new jsoned.Editor();
-    editor.initEdior(template, value);
-
-    var storage = new jsoned.Storage();
+    new jsoned.Jsoned({template: template, value: value});
 });
 </script>
 </head>
