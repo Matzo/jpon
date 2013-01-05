@@ -7,6 +7,7 @@
         var self = this;
         this.options = $.extend({
             saveBtnId : "saveBtn",
+            displayBtnId : "displayBtn",
             loadSuccess :function(jsonString) {
                 var jsonObj = JSON.parse(jsonString);
                 self.editor.initEditor(self.options.template, jsonObj);
@@ -30,10 +31,16 @@
 
         initControls : function() {
             var self = this;
+
+            // save
             $("#" + this.options.saveBtnId).click(function() {
-                console.log(self.editor.buildJSONString());
+                self.storage.save(self.editor.buildJSONString());
+            });
+
+            // preview
+            $("#" + this.options.displayBtnId).click(function() {
+                self.storage.display(self.editor.buildJSONString());
             });
         }
     }
-
 })(this.jQuery);

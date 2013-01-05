@@ -7,10 +7,46 @@ h1:after {
 #editor {
 }
 
-#editor ul.listEditor {
+#editor ul.listEditor li {
     border: 1px solid #f5f5f5;
+    margin-bottom:10px;
     list-style: none;
 }
+
+#editor ul.listEditor li.moreBtn {
+    padding:5px;
+    font-size: 20px;
+    color:grey;
+    text-align:center;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+       -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+#editor ul.listEditor li.moreBtn:hover {
+    background-color: lightgrey;
+    color:#000;
+    cursor: pointer;
+}
+
+#editor ul.listEditor li > div.delBtn {
+    padding:5px;
+    font-size: 20px;
+    color:lightgrey;
+    text-align:center;
+    position:absolute;
+    right:20px;
+    width:30px;
+}
+#editor ul.listEditor li > div.delBtn:hover {
+    color:grey;
+    cursor: pointer;
+}
+
 #editor ul.selectMultipleEditor li,
 #editor ul.selectEditor li {
     background-color: #f5f5f5;
@@ -21,7 +57,19 @@ h1:after {
 footer {
     border-top: 1px solid #eee;
     padding:10px;
+    margin-bottom:40px;
     text-align: center
+}
+
+#controller {
+    display:block;
+    position:fixed;
+    width:100%;
+    bottom:0px;
+    left:0px;
+    padding:5px;
+    background-color:#fff;
+    border-top:1px solid #eee;
 }
 
 #dragAndDropBox {
@@ -40,4 +88,10 @@ footer {
 }
 #dragAndDropBox:hover {
     background-color: lightyellow;
+}
+
+#outputBox textarea {
+    width: 100%;
+    height: 400px;
+    -webkit-box-sizing: border-box;
 }

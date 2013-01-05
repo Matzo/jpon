@@ -46,8 +46,10 @@
             var max = template.max ? template.max : 0;
             var min = template.min ? template.min : 0;
             var len = value ? value.length : 0;
+            var self = this;
             var i;
             var list = $("<ul></ul>").addClass("listEditor");
+            list.data("template", template);
             value = value || [];
 
             var loopMax = Math.max(min, len);
@@ -55,12 +57,34 @@
                 loopMax = Math.min(loopMax, max);
             }
 
-            for (i = 0; i < loopMax; i++) {
-                var li = $("<li></li>");
-                var item = this.buildEditor(template.value, value[i]);
-
+            var buildListItem = function(liTemplate, value) {
+                var li = $("<li class='values'></li>");
+                var item = self.buildEditor(liTemplate, value);
                 li.append(item);
-                list.append(li);
+
+                if (template.expandable) {
+                    var del = $("<div class='delBtn'>x</div>");
+                    del.click(function() {
+                        li.remove();
+                    });
+                    li.prepend(del);
+                }
+                return li;
+            }
+
+            for (i = 0; i < loopMax; i++) {
+                list.append(buildListItem(template.value, value[i]));
+            }
+
+            if (template.expandable) {
+                var more = $("<li class='moreBtn'>+</li>");
+                more.click(function() {
+                    var li = buildListItem(template.value);
+                    list.append(li);
+                    li.hide().show("fast");
+                    list.append(more);
+                });
+                list.append(more);
             }
             return list;
         },
@@ -164,7 +188,7 @@
         },
         buildJSONFromList : function(editor) {
             var list = [];
-            var children = editor.children();
+            var children = editor.children().filter(".values");
             for (var i = 0; i < children.size(); i++) {
                 var child = $(children.get(i)).children();
                 list.push(this.buildJSONRecursive(child));

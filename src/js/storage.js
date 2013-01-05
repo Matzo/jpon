@@ -5,7 +5,8 @@
 
     jsoned.Storage = function(options) {
         this.options = $.extend({
-            loadBoxId : "dragAndDropBox"
+            loadBoxId : "dragAndDropBox",
+            outputBoxId : "outputBox"
         }, options);
     }
 
@@ -18,6 +19,27 @@
 
                 var files = e.dataTransfer.files;
                 self.load(files[0]);
+            });
+
+            var outputBody = this.outputBody = $(
+                '<div class="modal-backdrop"></div>' +
+                '<div class="modal">' +
+                    '<div class="modal-header">generated JSON</div>' +
+                    '<div class="modal-body">' +
+                        '<textarea id="output"></textarea>' +
+                    '</div>' +
+                    '<div class="modal-footer">' +
+                        '<button id="closeOutputBtn">close</button>' +
+                    '</div>' +
+                '</div>'
+            );
+
+            var outputBox = $("#" + this.options.outputBoxId);
+            outputBox.addClass("modal-background").addClass("invisible").append(outputBody);
+
+
+            $("#closeOutputBtn").click(function() {
+                self.close();
             });
         },
         load : function(file) {
@@ -38,9 +60,32 @@
             }
         },
         loadSuccess : function(jsonString) {
-            console.log(jsonString);
+        //    console.log(jsonString);
         },
         save : function(jsonString, filename) {
+            // var blobBuilder;
+            //if (window.Blob) {
+            //    blobBuilder = new Blob();
+            // if (window.MozBlobBuilder) {
+            //     blobBuilder = new MozBlobBuilder();
+            // } else if (window.WebKitBlobBuilder) {
+            //     blobBuilder = new WebKitBlobBuilder();
+            // }
+            // blobBuilder.append(jsonString);
+
+            // var link;
+            // window.URL = window.URL || window.webkitURL;
+            // location.href = window.URL.createObjectURL(blobBuilder.getBlob());
+
+            $("#output").val(jsonString);
+        },
+        display : function(jsonString, filename) {
+            var outputBox = $("#" + this.options.outputBoxId);
+            outputBox.removeClass("invisible");
+            $("#output").val(jsonString);
+        },
+        close : function(jsonString, filename) {
+            var outputBox = $("#" + this.options.outputBoxId).addClass("invisible");
         }
     }
 

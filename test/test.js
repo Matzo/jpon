@@ -206,14 +206,14 @@ $(function() {
     });
 
     test("buildJSONFromString()", function() {
-        editor.initEdior({type:"string", value:"foo"});
+        editor.initEditor({type:"string", value:"foo"});
         var result = editor.buildJSON();
         var expect = "foo";
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
     test("buildJSONFromMap()", function() {
-        editor.initEdior({type:"map", value:[
+        editor.initEditor({type:"map", value:[
             { name:"date",   type:"string", value:"foo" },
             { name:"title",  type:"string", value:"bar" }
         ]});
@@ -226,28 +226,28 @@ $(function() {
     });
 
     test("buildJSONFromList()", function() {
-        editor.initEdior({type:"list", min:2, value:{type:"string", value:"aa"}});
+        editor.initEditor({type:"list", min:2, value:{type:"string", value:"aa"}});
         var result = editor.buildJSON();
         var expect = ["aa","aa"];
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
     test("buildJSONFromSelect()", function() {
-        editor.initEdior({type:"select", value:["aa","bb","cc"]}, "bb");
+        editor.initEditor({type:"select", value:["aa","bb","cc"]}, "bb");
         var result = editor.buildJSON();
         var expect = "bb";
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
     test("buildJSONFromSelectMultiple()", function() {
-        editor.initEdior({type:"select-multi", value:["aa","bb","cc","dd"]}, ["bb","cc"]);
+        editor.initEditor({type:"select-multi", value:["aa","bb","cc","dd"]}, ["bb","cc"]);
         var result = editor.buildJSON();
         var expect = ["bb","cc"];
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
     test("buildJSON()", function() {
-        editor.initEdior(template);
+        editor.initEditor(template);
         var result = editor.buildJSON();
         var expect = {
             "announce" : [
