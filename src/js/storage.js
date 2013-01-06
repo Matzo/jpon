@@ -13,12 +13,15 @@
     jsoned.Storage.prototype = {
         initStorage : function(template) {
             var self = this;
-            $("#" + this.options.loadBoxId).bind("drop", function(jqEvent) {
+            $(document.body).bind("drop", function(jqEvent) {
                 var e = jqEvent.originalEvent;
-                e.preventDefault();
+                var dragAndDropBox = $("#" + self.options.loadBoxId + ">div");
 
-                var files = e.dataTransfer.files;
-                self.load(files[0]);
+                if (e.toElement == dragAndDropBox.get(0)) {
+                    var files = e.dataTransfer.files;
+                    self.load(files[0]);
+                }
+                e.preventDefault();
             });
 
             var outputBody = this.outputBody = $(

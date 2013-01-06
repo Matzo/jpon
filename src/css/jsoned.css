@@ -9,9 +9,13 @@ h1:after {
 
 #editor ul.listEditor li {
     border: 1px solid #f5f5f5;
+    border-left: 8px double lightgrey;
     background-color:#fff;
     margin-bottom:10px;
     list-style: none;
+}
+#editor ul.listEditor li:hover {
+    background-color:#fcfcfc;
 }
 
 #editor ul.listEditor li.moreBtn {

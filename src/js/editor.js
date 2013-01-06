@@ -182,7 +182,7 @@
             var children = editor.children();
 
             for (var i = 0; i < children.size(); i+=2) {
-                var key = children.get(i).innerText;
+                var key = $(children.get(i)).text();
                 var child = $(children.get(i+1)).children();
                 var value = this.buildJSONRecursive(child);
                 obj[key] = value;
