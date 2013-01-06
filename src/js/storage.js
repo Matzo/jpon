@@ -26,7 +26,7 @@
                 '<div class="modal">' +
                     '<div class="modal-header">generated JSON</div>' +
                     '<div class="modal-body">' +
-                        '<textarea id="output"></textarea>' +
+                        '<textarea id="output" readonly></textarea>' +
                     '</div>' +
                     '<div class="modal-footer">' +
                         '<button id="closeOutputBtn">close</button>' +
@@ -36,6 +36,9 @@
 
             var outputBox = $("#" + this.options.outputBoxId);
             outputBox.addClass("modal-background").addClass("invisible").append(outputBody);
+            $("#output").click(function() {
+                $(this).select();
+            });
 
 
             $("#closeOutputBtn").click(function() {
@@ -82,7 +85,7 @@
         display : function(jsonString, filename) {
             var outputBox = $("#" + this.options.outputBoxId);
             outputBox.removeClass("invisible");
-            $("#output").val(jsonString);
+            $("#output").val(jsonString).focus().select();
         },
         close : function(jsonString, filename) {
             var outputBox = $("#" + this.options.outputBoxId).addClass("invisible");

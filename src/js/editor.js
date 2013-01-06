@@ -48,7 +48,7 @@
             var len = value ? value.length : 0;
             var self = this;
             var i;
-            var list = $("<ul></ul>").addClass("listEditor");
+            var list = $("<ul></ul>").addClass("listEditor").sortable({axis: "y", items:"> li.values"});
             list.data("template", template);
             value = value || [];
 
@@ -65,9 +65,13 @@
                 if (template.expandable) {
                     var del = $("<div class='delBtn'>x</div>");
                     del.click(function() {
-                        li.remove();
+                        del.hide();
+                        li.hide("fast", function() {
+                            li.remove();
+                        });
                     });
                     li.prepend(del);
+                    del.hide().show("fast");
                 }
                 return li;
             }
