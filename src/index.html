@@ -5,10 +5,10 @@
 <title>JSONEditor</title>
 <link rel="stylesheet" href="css/jsoned.css">
 <script type="text/javascript" src="lib/jquery.min.js"></script>
-<script type="text/javascript" src="lib/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
-<link href="lib/jquery-ui/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet">
 <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 <script src="lib/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="lib/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
+<link href="lib/jquery-ui/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet">
 
 <script type="text/javascript" src="js/editor.js"></script>
 <script type="text/javascript" src="js/storage.js"></script>
@@ -19,7 +19,7 @@ $(function() {
         type:"map",
         value:[
             {
-                name:"announce",
+                name:"mapObject1",
                 type:"list",
                 expandable:true,
                 min:1,
@@ -30,13 +30,13 @@ $(function() {
                         { name:"date",   type:"string" },
                         { name:"title",  type:"string" },
                         { name:"url",    type:"string" },
-                        { name:"openIn", type:"select", value:["window", "iframe", ""] },
-                        { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
+                        { name:"type", type:"select", value:["select1", "select2", "select3"] },
+                        { name:"attributes", type:"select-multi", value:["attr1", "attr2", "attr3", "attr4"] }
                     ]
                 }
             },
             {
-                name:"maintenance",
+                name:"mapObject2",
                 type:"list",
                 expandable:true,
                 min:1,
@@ -47,48 +47,15 @@ $(function() {
                         { name:"date",   type:"string" },
                         { name:"title",  type:"string" },
                         { name:"url",    type:"string" },
-                        { name:"openIn", type:"select", value:["window", "iframe", ""] },
-                        { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
+                        { name:"type", type:"select", value:["select1", "select2", "select3"] },
+                        { name:"attributes", type:"select-multi", value:["attr1", "attr2", "attr3", "attr4"] }
                     ]
                 }
             },
         ]
     }
 
-    var value = {
-        "announce" : [
-            {
-                "date" : "2013/01/01",
-                "title" : "A Happy New Year",
-                "url" : "https://www.google.co.jp/search?q=A+Happy+New+Year",
-                "openIn" : "window",
-                "target" : ["android","windows","ios","web"]
-            },
-            {
-                "date" : "2012/12/31",
-                "title" : "New Year's Eve",
-                "url" : "https://www.google.co.jp/search?q=New+Year's+Eve",
-                "openIn" : "iframe",
-                "target" : ["web"]
-            }
-        ],
-        "maintenance" : [
-            {
-                "date" : "2012/12/18",
-                "title" : "Service Maintenance 1",
-                "url" : "https://www.google.co.jp/search?q=Service+Maintenance",
-                "openIn" : "window",
-                "target" : ["android","windows","ios"]
-           },
-           {
-                "date" : "2012/12/26",
-                "title" : "Service Maintenance 2",
-                "url" : "https://www.google.co.jp/search?q=Service+Maintenance+2",
-                "openIn" : "window",
-                "target" : ["android","windows","ios","web"]
-            }
-        ]
-    };
+    var value = {};
 
     new jsoned.Jsoned({template: template, value: value});
 });
@@ -99,8 +66,8 @@ $(function() {
 <h1>JSONED<span class="dark_color">ITOR</span></h1>
 </header>
 
-<section id="dragAndDropBox">
-<div>Drag & Drop Here!</div>
+<h4>Sample Template</h4>
+<section id="inputBox">
 </section>
 
 <section id="editor">
@@ -110,8 +77,6 @@ $(function() {
 </section>
 
 <section id="controller">
-<!--<button id="saveBtn" type="button" class="btn btn-primary">save</button>-->
-<button id="displayBtn" type="button" class="btn btn-primary">JSON</button>
 </section>
 <footer><small>Copyright &copy; 2013 Matzo All Rights Reserved.</small></footer>
 </body>

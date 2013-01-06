@@ -5,7 +5,7 @@
 
     jsoned.Storage = function(options) {
         this.options = $.extend({
-            loadBoxId : "dragAndDropBox",
+            inputBoxId : "inputBox",
             outputBoxId : "outputBox"
         }, options);
     }
@@ -13,15 +13,29 @@
     jsoned.Storage.prototype = {
         initStorage : function(template) {
             var self = this;
+
+            var inputBox = $("#" + this.options.inputBoxId);
+            inputBox.append('<div id="inputFileBox"><input type="file" id="inputFile"></input></div>');
+            if ($.browser.chrome) {
+                inputBox.append('<div style="margin:10px;"> or </div>');
+                inputBox.append('<div id="dragAndDropBox">Drag & Drop Here!</div>');
+            }
+
             $(document.body).bind("drop", function(jqEvent) {
                 var e = jqEvent.originalEvent;
-                var dragAndDropBox = $("#" + self.options.loadBoxId + ">div");
+                var dragAndDropBox = $("#dragAndDropBox");
 
                 if (e.toElement == dragAndDropBox.get(0)) {
                     var files = e.dataTransfer.files;
                     self.load(files[0]);
                 }
                 e.preventDefault();
+            });
+
+            $("#inputFile").bind("change", function(jqEvent) {
+                var e = jqEvent.originalEvent;
+                var files = e.target.files;
+                self.load(files[0]);
             });
 
             var outputBody = this.outputBody = $(
@@ -54,7 +68,7 @@
             var reader = new FileReader();
 
             var loading = true;
-            if (file.type.match('text.*')) {
+            if (/\.js$|\.json$/.test(file.name)) {
                 reader.onload = function (evt) {
                     if (self.options.loadSuccess) {
                         self.options.loadSuccess(reader.result);

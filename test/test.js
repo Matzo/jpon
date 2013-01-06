@@ -171,6 +171,20 @@ $(function() {
     });
 
     test("buildSelectEditor()", function() {
+        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], default:"iframe"});
+
+        var checkedObj = $("input[type=radio]:checked", result);
+        equal(checkedObj.val(), "iframe", "iframe");
+    });
+
+    test("buildSelectEditor()", function() {
+        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], default:"window"}, "");
+
+        var checkedObj = $("input[type=radio]:checked", result);
+        equal(checkedObj.val(), "", "");
+    });
+
+    test("buildSelectEditor()", function() {
         var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""]}, "iframe");
 
         var checkedObj = $("input[type=radio]:checked", result);
@@ -181,6 +195,7 @@ $(function() {
         var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"]});
 
         var inputObj = $("input[type=checkbox]", result);
+        console.log(inputObj);
         equal(inputObj.get(0).value, "android");
         equal(inputObj.get(1).value, "window");
         equal(inputObj.get(2).value, "ios");
@@ -188,7 +203,25 @@ $(function() {
     });
 
     test("buildSelectMultipleEditor()", function() {
+        var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"], default:["ios", "web"]});
+
+        var checkedObj = $("input[type=checkbox]:checked", result);
+        equal(checkedObj.size(), 2);
+        equal(checkedObj.get(0).value, "ios");
+        equal(checkedObj.get(1).value, "web");
+    });
+
+    test("buildSelectMultipleEditor()", function() {
         var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"]}, ["window", "ios"]);
+
+        var checkedObj = $("input[type=checkbox]:checked", result);
+        equal(checkedObj.size(), 2);
+        equal(checkedObj.get(0).value, "window");
+        equal(checkedObj.get(1).value, "ios");
+    });
+
+    test("buildSelectMultipleEditor()", function() {
+        var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"], default:["android", "window"]}, ["window", "ios"]);
 
         var checkedObj = $("input[type=checkbox]:checked", result);
         equal(checkedObj.size(), 2);

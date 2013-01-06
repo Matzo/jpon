@@ -7,18 +7,25 @@ h1:after {
 #editor {
 }
 
-#editor ul.listEditor li {
+#editor input.stringEditor {
+}
+
+#editor dl {
+    margin:0px;
+    padding:10px 0px;
+}
+#editor ul.listEditor > li {
     border: 1px solid #f5f5f5;
     border-left: 8px double lightgrey;
     background-color:#fff;
     margin-bottom:10px;
     list-style: none;
 }
-#editor ul.listEditor li:hover {
-    background-color:#fcfcfc;
+#editor ul.listEditor > li:hover {
+    background-color:#fbfbfb;
 }
 
-#editor ul.listEditor li.moreBtn {
+#editor ul.listEditor > li.moreBtn {
     padding:5px;
     font-size: 20px;
     color:grey;
@@ -76,13 +83,25 @@ footer {
     border-top:1px solid #eee;
 }
 
-#dragAndDropBox {
-    display: block;
+#inputBox {
     position: absolute;
     right: 20px;
     top: 20px;
+}
+#inputBox > div {
+    float:left;
+}
+#inputFileBox {
+    padding:10px 0px;
 
-    padding:5px;
+}
+#inputFile {
+    line-height:10px;
+}
+#dragAndDropBox {
+    display: block;
+
+    padding:5px 20px;
     background-color: #f5f5f5;
     border: 5px dashed #ccc;
     border: 5px dashed rgba(0, 0, 0, 0.15);

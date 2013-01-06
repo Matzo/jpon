@@ -6,6 +6,7 @@
     jsoned.Jsoned = function(options) {
         var self = this;
         this.options = $.extend({
+            controllerId: "controller",
             saveBtnId : "saveBtn",
             displayBtnId : "displayBtn",
             loadSuccess :function(jsonString) {
@@ -32,13 +33,18 @@
         initControls : function() {
             var self = this;
 
+            $("#" + this.options.controllerId).append(
+                '<button id="displayBtn" type="button" class="btn btn-primary">build JSON</button>'
+            );
+            //<button id="saveBtn" type="button" class="btn btn-primary">save</button>
+
             // save
-            $("#" + this.options.saveBtnId).click(function() {
+            $("#saveBtn").click(function() {
                 self.storage.save(self.editor.buildJSONString());
             });
 
             // preview
-            $("#" + this.options.displayBtnId).click(function() {
+            $("#displayBtn").click(function() {
                 self.storage.display(self.editor.buildJSONString());
             });
         }

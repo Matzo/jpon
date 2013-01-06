@@ -39,7 +39,7 @@
 
         buildStringEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";
-            var tag = $('<input type="text" name="' + template.name + '" value="' + val + '">').addClass("stringEditor");
+            var tag = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6">').addClass("stringEditor");
             return tag;
         },
         buildListEditor : function(template, value) {
@@ -48,9 +48,13 @@
             var len = value ? value.length : 0;
             var self = this;
             var i;
-            var list = $("<ul></ul>").addClass("listEditor").sortable({axis: "y", items:"> li.values"});
+            var list = $("<ul></ul>").addClass("listEditor");
             list.data("template", template);
             value = value || [];
+
+            if (template.expandable) {
+                list.sortable({axis: "y", items:"> li.values"});
+            }
 
             var loopMax = Math.max(min, len);
             if (0 < max) {
@@ -123,7 +127,11 @@
                     li.append(radio);
                     list.append(li);
                 }
-                $("input[type=radio]", list).val([value]);
+                if (value !== undefined && value !== null) {
+                    $("input[type=radio]", list).val([value]);
+                } else {
+                    $("input[type=radio]", list).val([template.default]);
+                }
                 radioCount++;
                 return list;
             }
@@ -145,6 +153,8 @@
                 }
                 if (value) {
                     $("input[type=checkbox]", list).val(value);
+                } else if(template.default) {
+                    $("input[type=checkbox]", list).val(template.default);
                 }
                 checkboxCount++;
                 return list;
