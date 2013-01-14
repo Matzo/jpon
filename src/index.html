@@ -13,6 +13,7 @@
 <script type="text/javascript" src="js/editor.js"></script>
 <script type="text/javascript" src="js/storage.js"></script>
 <script type="text/javascript" src="js/jsoned.js"></script>
+<script type="text/javascript" src="js/templates.js"></script>
 <script>
 $(function() {
     var template = {
@@ -57,7 +58,11 @@ $(function() {
 
     var value = {};
 
-    new jsoned.Jsoned({template: template, value: value});
+    new jsoned.Jsoned({
+        template: template,
+        templateMaster:jsoned.Templates,
+        value: value
+    });
 });
 </script>
 </head>
@@ -66,7 +71,7 @@ $(function() {
 <h1>JSONED<span class="dark_color">ITOR</span></h1>
 </header>
 
-<h4>Sample Template</h4>
+<h4 id="templateName">Sample Template</h4>
 <section id="inputBox">
 </section>
 

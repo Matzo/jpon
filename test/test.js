@@ -171,14 +171,14 @@ $(function() {
     });
 
     test("buildSelectEditor()", function() {
-        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], default:"iframe"});
+        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], "default":"iframe"});
 
         var checkedObj = $("input[type=radio]:checked", result);
         equal(checkedObj.val(), "iframe", "iframe");
     });
 
     test("buildSelectEditor()", function() {
-        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], default:"window"}, "");
+        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], "default":"window"}, "");
 
         var checkedObj = $("input[type=radio]:checked", result);
         equal(checkedObj.val(), "", "");
@@ -203,7 +203,7 @@ $(function() {
     });
 
     test("buildSelectMultipleEditor()", function() {
-        var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"], default:["ios", "web"]});
+        var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"], "default":["ios", "web"]});
 
         var checkedObj = $("input[type=checkbox]:checked", result);
         equal(checkedObj.size(), 2);
@@ -221,7 +221,7 @@ $(function() {
     });
 
     test("buildSelectMultipleEditor()", function() {
-        var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"], default:["android", "window"]}, ["window", "ios"]);
+        var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"], "default":["android", "window"]}, ["window", "ios"]);
 
         var checkedObj = $("input[type=checkbox]:checked", result);
         equal(checkedObj.size(), 2);
@@ -253,7 +253,7 @@ $(function() {
         var result = editor.buildJSON();
         var expect = {
             date: "foo",
-            title: "bar",
+            title: "bar"
         };
         equal(JSON.stringify(result), JSON.stringify(expect));
     });

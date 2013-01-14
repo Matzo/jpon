@@ -11,26 +11,24 @@
     }
 
     jsoned.Storage.prototype = {
-        initStorage : function(template) {
+        initStorage : function() {
             var self = this;
 
             var inputBox = $("#" + this.options.inputBoxId);
-            inputBox.append('<div id="inputFileBox"><input type="file" id="inputFile"></input></div>');
-            if ($.browser.chrome) {
-                inputBox.append('<div style="margin:10px;"> or </div>');
-                inputBox.append('<div id="dragAndDropBox">Drag & Drop Here!</div>');
-            }
+            inputBox.append('<div id="dragAndDropBox"><input type="file" id="inputFile" class="basket"></input><div>^ Drag & Drop Here!</div></div>');
+            //inputBox.append('<div id="manualInputBox"><textarea id="manualInput"></textarea>');
+            //inputBox.append('<div id="selectFileBox"><input type="file" id="selectFile"></input></div>');
 
-            $(document.body).bind("drop", function(jqEvent) {
-                var e = jqEvent.originalEvent;
-                var dragAndDropBox = $("#dragAndDropBox");
+            //$(document.body).bind("drop", function(jqEvent) {
+            //    var e = jqEvent.originalEvent;
+            //    var dragAndDropBox = $("#dragAndDropBox");
 
-                if (e.toElement == dragAndDropBox.get(0)) {
-                    var files = e.dataTransfer.files;
-                    self.load(files[0]);
-                }
-                e.preventDefault();
-            });
+            //    if (e.toElement == dragAndDropBox.get(0)) {
+            //        var files = e.dataTransfer.files;
+            //        self.load(files[0]);
+            //    }
+            //    e.preventDefault();
+            //});
 
             $("#inputFile").bind("change", function(jqEvent) {
                 var e = jqEvent.originalEvent;
@@ -46,7 +44,8 @@
                         '<textarea id="output" readonly></textarea>' +
                     '</div>' +
                     '<div class="modal-footer">' +
-                        '<button id="closeOutputBtn">close</button>' +
+                        '<a id="downloadBtn" class="btn btn-primary">download</a>' +
+                        '<button id="closeOutputBtn" class="btn">close</button>' +
                     '</div>' +
                 '</div>'
             );
@@ -66,21 +65,30 @@
             var self = this;
             this.options.file = file;
             var reader = new FileReader();
+            var charset = "UTF-8";
+
+            $.each(self.options.templateMaster, function(i, master) {
+                if (file.name == master.filename) {
+                    self.options.template = master.template;
+                    charset = master.charset;
+                    return false;
+                }
+            });
 
             var loading = true;
             if (/\.js$|\.json$/.test(file.name)) {
                 reader.onload = function (evt) {
                     if (self.options.loadSuccess) {
-                        self.options.loadSuccess(reader.result);
+                        self.options.loadSuccess(reader.result, file.name);
                     } else {
-                        self.loadSuccess(reader.result);
+                        self.loadSuccess(reader.result, file.name);
                     }
                 }
-                reader.readAsText(file, 'UTF-8');
+                reader.readAsText(file, charset);
             }
         },
-        loadSuccess : function(jsonString) {
-        //    console.log(jsonString);
+        loadSuccess : function(jsonString, filename) {
+        //    console.log(jsonString, filename);
         },
         save : function(jsonString, filename) {
             // var blobBuilder;
@@ -103,6 +111,22 @@
             var outputBox = $("#" + this.options.outputBoxId);
             outputBox.removeClass("invisible");
             $("#output").val(jsonString).focus().select();
+
+            if ($.browser.chrome && window.Blob) {
+                var bb = new Blob([jsonString]);
+
+                var url = window.URL || window.webkitURL;
+                var blobURL = url.createObjectURL(bb);
+                var a = $("#downloadBtn").get(0);
+                a.innerHTML = "download";
+                a.download = filename;
+                a.file = filename;
+                a.href = blobURL;
+
+                $("#downloadBtn").show();
+            } else {
+                $("#downloadBtn").hide();
+            }
         },
         close : function(jsonString, filename) {
             var outputBox = $("#" + this.options.outputBoxId).addClass("invisible");

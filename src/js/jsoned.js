@@ -9,8 +9,16 @@
             controllerId: "controller",
             saveBtnId : "saveBtn",
             displayBtnId : "displayBtn",
-            loadSuccess :function(jsonString) {
+            loadSuccess :function(jsonString, filename) {
                 var jsonObj = JSON.parse(jsonString);
+                $("#templateName").text(filename);
+                $.each(self.options.templateMaster, function(i, e) {
+                    if (filename && filename == e.filename) {
+                        self.options.template = e.template;
+                        self.options.selectedMaster = e;
+                        return false;
+                    }
+                });
                 self.editor.initEditor(self.options.template, jsonObj);
             }
         }, options);
@@ -25,7 +33,7 @@
             this.editor = new jsoned.Editor(this.options);
             this.editor.initEditor(template, value);
         },
-        initStorage : function(template) {
+        initStorage : function() {
             this.storage = new jsoned.Storage(this.options);
             this.storage.initStorage();
         },
@@ -45,7 +53,8 @@
 
             // preview
             $("#displayBtn").click(function() {
-                self.storage.display(self.editor.buildJSONString());
+                var filename = self.options.selectedMaster ? self.options.selectedMaster.filename : "data.json";
+                self.storage.display(self.editor.buildJSONString(), filename);
             });
         }
     }

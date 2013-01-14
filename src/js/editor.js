@@ -3,6 +3,9 @@
     if (!this.jsoned) this.jsoned = {};
     if (jsoned.Editor) return;
 
+    // for IE
+    var _DEFAULT = "default";
+
     jsoned.Editor = function(options) {
         this.options = $.extend({
             editorAreaId : "editor"
@@ -23,6 +26,7 @@
          */
         buildEditor : function(template, value) {
             var result = null;
+            var template = template || {};
             if (template.type == "string") {
                 result = this.buildStringEditor(template, value);
             } else if (template.type == "map") {
@@ -98,15 +102,17 @@
         },
         buildMapEditor : function(template, value) {
             var mapObj = $("<dl></dl>").addClass("dl-horizontal").addClass("mapEditor");
-            var i, propTmpl, propVal;
+            var i, propTmpl, propName, propVal;
             for (i = 0; i < template.value.length; i++) {
                 propTmpl = template.value[i];
-                if (value) {
-                    propVal = value[propTmpl.name];
+                if (propTmpl && propTmpl.name) {
+                    propName = propTmpl.name;
                 }
-
+                if (value && propName) {
+                    propVal = value[propName];
+                }
                 // dt
-                mapObj.append($("<dt></dt>").html(propTmpl.name));
+                mapObj.append($("<dt></dt>").html(propName));
                 // dd
                 mapObj.append($("<dd></dd>").append(this.buildEditor(propTmpl, propVal)));
             }
@@ -130,7 +136,7 @@
                 if (value !== undefined && value !== null) {
                     $("input[type=radio]", list).val([value]);
                 } else {
-                    $("input[type=radio]", list).val([template.default]);
+                    $("input[type=radio]", list).val([template[_DEFAULT]]);
                 }
                 radioCount++;
                 return list;
@@ -153,8 +159,8 @@
                 }
                 if (value) {
                     $("input[type=checkbox]", list).val(value);
-                } else if(template.default) {
-                    $("input[type=checkbox]", list).val(template.default);
+                } else if(template[_DEFAULT]) {
+                    $("input[type=checkbox]", list).val(template[_DEFAULT]);
                 }
                 checkboxCount++;
                 return list;
