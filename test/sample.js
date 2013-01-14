@@ -20,7 +20,6 @@
             "date" : "2012/12/18",
             "title" : "Service Maintenance 1",
             "url" : "https://www.google.co.jp/search?q=Service+Maintenance",
-            "openIn" : "window",
             "target" : ["android","windows","ios"]
        },
        {
