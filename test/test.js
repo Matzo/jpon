@@ -90,6 +90,30 @@ $(function() {
         equal(result.get(0).value, '2012/12/31');
     });
 
+    test("buildNumberEditor()", function() {
+        var result = editor.buildEditor({name:"date", type:"number"});
+        equal(result.get(0).tagName, 'INPUT', "tagName");
+        equal(result.get(0).type, 'text', "type");
+        equal(result.get(0).name, 'date', "name");
+        equal(result.get(0).value, 0,"value");
+    });
+
+    test("buildNumberEditor()", function() {
+        var result = editor.buildEditor({name:"date", type:"number", value:12345});
+        equal(result.get(0).tagName, 'INPUT', "tagName");
+        equal(result.get(0).type, 'text', "type");
+        equal(result.get(0).name, 'date', "name");
+        equal(result.get(0).value, 12345, "value");
+    });
+
+    test("buildNumberEditor()", function() {
+        var result = editor.buildEditor({name:"date", type:"number", value:12345}, 123456);
+        equal(result.get(0).tagName, 'INPUT');
+        equal(result.get(0).type, 'text');
+        equal(result.get(0).name, 'date');
+        equal(result.get(0).value, 123456);
+    });
+
     test("buildMapEditor()", function() {
         var result = editor.buildEditor({name:"date", type:"map", value:[
             { name:"date",   type:"string" },
@@ -272,6 +296,20 @@ $(function() {
         editor.initEditor({type:"string-multi", value:"foo\nbar"});
         var result = editor.buildJSON();
         var expect = "foo\nbar";
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromNumber()", function() {
+        editor.initEditor({type:"number", value:123});
+        var result = editor.buildJSON();
+        var expect = 123;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromNumber()", function() {
+        editor.initEditor({type:"number", value:123.4});
+        var result = editor.buildJSON();
+        var expect = 123.4;
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
