@@ -66,6 +66,30 @@ $(function() {
         equal(result.get(0).value, '2012/12/31');
     });
 
+    test("buildStringMultiEditor()", function() {
+        var result = editor.buildEditor({name:"date", type:"string-multi"});
+        equal(result.get(0).tagName, 'TEXTAREA', "tagName");
+        equal(result.get(0).type, 'textarea');
+        equal(result.get(0).name, 'date', "name");
+        equal(result.get(0).value, '',"value");
+    });
+
+    test("buildStringMultiEditor()", function() {
+        var result = editor.buildEditor({name:"date", type:"string-multi", value:"2013/01/01"});
+        equal(result.get(0).tagName, 'TEXTAREA', "tagName");
+        equal(result.get(0).type, 'textarea');
+        equal(result.get(0).name, 'date', "name");
+        equal(result.get(0).value, '2013/01/01', "value");
+    });
+
+    test("buildStringMultiEditor()", function() {
+        var result = editor.buildEditor({name:"date", type:"string-multi", value:"2013/01/01"}, "2012/12/31");
+        equal(result.get(0).tagName, 'TEXTAREA');
+        equal(result.get(0).type, 'textarea');
+        equal(result.get(0).name, 'date');
+        equal(result.get(0).value, '2012/12/31');
+    });
+
     test("buildMapEditor()", function() {
         var result = editor.buildEditor({name:"date", type:"map", value:[
             { name:"date",   type:"string" },
@@ -195,7 +219,6 @@ $(function() {
         var result = editor.buildEditor({name:"target", type:"select-multi", value:["android", "window", "ios", "web"]});
 
         var inputObj = $("input[type=checkbox]", result);
-        console.log(inputObj);
         equal(inputObj.get(0).value, "android");
         equal(inputObj.get(1).value, "window");
         equal(inputObj.get(2).value, "ios");
@@ -242,6 +265,13 @@ $(function() {
         editor.initEditor({type:"string", value:"foo"});
         var result = editor.buildJSON();
         var expect = "foo";
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromStringMulti()", function() {
+        editor.initEditor({type:"string-multi", value:"foo\nbar"});
+        var result = editor.buildJSON();
+        var expect = "foo\nbar";
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
