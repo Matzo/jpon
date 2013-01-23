@@ -300,6 +300,20 @@ $(function() {
     });
 
     test("buildJSONFromNumber()", function() {
+        editor.initEditor({type:"number", value:null});
+        var result = editor.buildJSON();
+        var expect = 0;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromNumber()", function() {
+        editor.initEditor({type:"number", value:"09"});
+        var result = editor.buildJSON();
+        var expect = 9;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromNumber()", function() {
         editor.initEditor({type:"number", value:123});
         var result = editor.buildJSON();
         var expect = 123;

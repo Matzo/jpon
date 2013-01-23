@@ -56,8 +56,8 @@
             return tag;
         },
         buildNumberEditor : function(template, value) {
-            var val = value ? value : template.value ? template.value : "";
-            var tag = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6">').addClass("numberEditor");
+            var val = value ? value : template.value ? template.value : 0;
+            var tag = $('<input type="text" name="' + template.name + '" value="' + parseFloat(val, 10) + '" class="span6">').addClass("numberEditor");
             return tag;
         },
         buildListEditor : function(template, value) {
