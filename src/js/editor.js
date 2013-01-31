@@ -132,19 +132,62 @@
             var mapObj = $("<dl></dl>").addClass("dl-horizontal").addClass("mapEditor");
             var i, propTmpl, propName, propVal, dt;
             var key, val;
+            var self = this;
             var keyEdit = function(_dt) {
                 if (0 < $("input", _dt).length) {
                     return;
                 }
                 var _orgName = _dt.html();
                 var _input = $('<input type="text" value="' + _orgName + '" class="span2">');
+                var _newKey;
                 _dt.html("");
                 _dt.append(_input);
                 _input.focus();
                 _input.bind("blur", function() {
-                    _dt.html(_input.val());
+                    _newKey = _input.val();
+                    if (_newKey) {
+                        _dt.html(_newKey);
+                    } else {
+                        _dt.next().remove();
+                        _dt.remove();
+                    }
                 });
             };
+            var addProperty = function(mapObj, propName, propVal, propTmpl) {
+                var dt,dd;
+                propTmpl = propTmpl || {
+                    type:"string",
+                    name:propName,
+                    option:true,
+                    value:propVal
+                };
+                // dt
+                dt = $("<dt></dt>").html(propName);
+                if (template.expandable) {
+                    dt.addClass("editable");
+
+                    dt.click(function() {
+                        keyEdit($(this));
+                    });
+                }
+                mapObj.append(dt);
+                // dd
+                dd = $("<dd></dd>").append(self.buildEditor(propTmpl, propVal));
+                mapObj.append(dd);
+                return mapObj;
+            };
+            var moreProperty = function(mapObj) {
+                var more = $('<dt class="moreBtn">+</dt><dd></dd>');
+                more.click(function() {
+                    addProperty(mapObj, "", "");
+                    mapObj.append(more);
+                    var dt = $("dt.editable", mapObj).last();
+                    dt.trigger("click");
+                    dt.hide().slideDown(100);
+                    dt.next().hide().slideDown(100);
+                });
+                mapObj.append(more);
+            }
             if (template.expandable && value) {
                 for (propName in value) {
                     if (value.hasOwnProperty(propName)) {
@@ -156,14 +199,7 @@
                             value:propVal
                         };
 
-                        // dt
-                        dt = $("<dt></dt>").html(propName).addClass("editable");
-                        dt.click(function() {
-                            keyEdit($(this));
-                        });
-                        mapObj.append(dt);
-                        // dd
-                        mapObj.append($("<dd></dd>").append(this.buildEditor(propTmpl, propVal)));
+                        addProperty(mapObj, propName, propVal, propTmpl);
                     }
                 }
             } else {
@@ -175,20 +211,12 @@
                     if (value && propName) {
                         propVal = value[propName];
                     }
-                    // dt
-                    dt = $("<dt></dt>").html(propName);
-                    if (template.expandable) {
-                        dt.addClass("editable");
 
-                        dt.click(function() {
-                            keyEdit($(this));
-                        });
-                    }
-                    mapObj.append(dt);
-                    // dd
-                    mapObj.append($("<dd></dd>").append(this.buildEditor(propTmpl, propVal)));
-
+                    addProperty(mapObj, propName, propVal, propTmpl);
                 }
+            }
+            if (template.expandable) {
+                moreProperty(mapObj);
             }
             return mapObj;
         },
