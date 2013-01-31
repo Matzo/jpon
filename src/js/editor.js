@@ -50,11 +50,23 @@
         buildStringEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";
             var tag = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6">').addClass("stringEditor");
+            if (template.nullable === true) {
+                tag.addClass("nullable");
+            }
+            if (template.option === true) {
+                tag.addClass("option");
+            }
             return tag;
         },
         buildStringMultipleEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";
             var tag = $('<textarea name="' + template.name + '" class="span6">' + val + '</textarea>').addClass("stringMultipleEditor");
+            if (template.nullable === true) {
+                tag.addClass("nullable");
+            }
+            if (template.option === true) {
+                tag.addClass("option");
+            }
             return tag;
         },
         buildNumberEditor : function(template, value) {
@@ -241,10 +253,22 @@
             }
         },
         buildJSONFromString : function(editor) {
-            return editor.val();
+            var result = editor.val();
+            if (editor.hasClass("option") && !result) {
+                result = undefined;
+            } else if (editor.hasClass("nullable") && !result) {
+                result = null;
+            }
+            return result;
         },
         buildJSONFromStringMultiple : function(editor) {
-            return editor.val();
+            var result = editor.val();
+            if (editor.hasClass("option") && !result) {
+                result = undefined;
+            } else if (editor.hasClass("nullable") && !result) {
+                result = null;
+            }
+            return result;
         },
         buildJSONFromNumber : function(editor) {
             return parseFloat(editor.val(), 10);

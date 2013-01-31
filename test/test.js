@@ -68,6 +68,16 @@ $(function() {
         equal(result.get(0).value, '2012/12/31');
     });
 
+    test("buildStringEditor() nullable", function() {
+        var result = editor.buildEditor({name:"date", type:"string", value:"2013/01/01", nullable:true});
+        ok(result.hasClass("nullable"), "nullable");
+    });
+
+    test("buildStringEditor() option", function() {
+        var result = editor.buildEditor({name:"date", type:"string", value:"2013/01/01", option:true});
+        ok(result.hasClass("option"), "option");
+    });
+
     test("buildStringMultiEditor()", function() {
         var result = editor.buildEditor({name:"date", type:"string-multi"});
         equal(result.get(0).tagName, 'TEXTAREA', "tagName");
@@ -90,6 +100,16 @@ $(function() {
         equal(result.get(0).type, 'textarea');
         equal(result.get(0).name, 'date');
         equal(result.get(0).value, '2012/12/31');
+    });
+
+    test("buildStringMultiEditor() nullable", function() {
+        var result = editor.buildEditor({name:"date", type:"string-multi", nullable:true});
+        ok(result.hasClass("nullable"), "nullable");
+    });
+
+    test("buildStringMultiEditor() option", function() {
+        var result = editor.buildEditor({name:"date", type:"string-multi", option:true});
+        ok(result.hasClass("option"), "option");
     });
 
     test("buildNumberEditor()", function() {
@@ -316,10 +336,53 @@ $(function() {
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
+    test("buildJSONFromString() hasOption", function() {
+        editor.initEditor({type:"string", value:"", option:true});
+        var result = editor.buildJSON();
+        var expect = undefined;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromString() hasOption", function() {
+        editor.initEditor({type:"string", value:"foo", option:true});
+        var result = editor.buildJSON();
+        var expect = "foo";
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromString() hasNullable", function() {
+        editor.initEditor({type:"string", value:"", nullable:true});
+        var result = editor.buildJSON();
+        var expect = null;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromString() hasNullable", function() {
+        editor.initEditor({type:"string", value:"foo", nullable:true});
+        var result = editor.buildJSON();
+        var expect = "foo";
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+
     test("buildJSONFromStringMulti()", function() {
         editor.initEditor({type:"string-multi", value:"foo\nbar"});
         var result = editor.buildJSON();
         var expect = "foo\nbar";
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromStringMulti() hasNullable", function() {
+        editor.initEditor({type:"string-multi", value:"", nullable:true});
+        var result = editor.buildJSON();
+        var expect = null;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromStringMulti() hasOption", function() {
+        editor.initEditor({type:"string-multi", value:"", option:true});
+        var result = editor.buildJSON();
+        var expect = undefined;
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
@@ -374,13 +437,16 @@ $(function() {
 
     test("buildJSONFromMap()", function() {
         editor.initEditor({type:"map", value:[
-            { name:"date",   type:"string", value:"foo" },
-            { name:"title",  type:"string", value:"bar" }
+            { name:"date",    type:"string", value:"foo" },
+            { name:"title",   type:"string", value:"bar" },
+            { name:"caption", type:"string", value:"", nullable:true },
+            { name:"remark",  type:"string", value:"", option:true }
         ]});
         var result = editor.buildJSON();
         var expect = {
             date: "foo",
-            title: "bar"
+            title: "bar",
+            caption: null
         };
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
