@@ -17,6 +17,7 @@ $(function() {
                         { name:"title",  type:"string" },
                         { name:"url",    type:"string" },
                         { name:"openIn", type:"select", value:["window", "iframe", ""] },
+                        { name:"foo",    type:"boolean", value:true },
                         { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
                     ]
                 }
@@ -34,6 +35,7 @@ $(function() {
                         { name:"title",  type:"string" },
                         { name:"url",    type:"string" },
                         { name:"openIn", type:"select", value:["window", "iframe", ""] },
+                        { name:"foo",    type:"boolean", value:false },
                         { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
                     ]
                 }
@@ -113,6 +115,28 @@ $(function() {
         equal(result.get(0).name, 'date');
         equal(result.get(0).value, 123456);
     });
+
+    test("buildBooleanEditor()", function() {
+        var result = editor.buildEditor({name:"foo", type:"boolean", value:true});
+
+        var checkedObj = $("input[type=radio]:checked", result);
+        equal(checkedObj.val(), "true", "true");
+    });
+
+    test("buildBooleanEditor()", function() {
+        var result = editor.buildEditor({name:"foo", type:"boolean", value:false});
+
+        var checkedObj = $("input[type=radio]:checked", result);
+        equal(checkedObj.val(), "false", "false");
+    });
+
+    test("buildBooleanEditor()", function() {
+        var result = editor.buildEditor({name:"foo", type:"boolean", value:true}, false);
+
+        var checkedObj = $("input[type=radio]:checked", result);
+        equal(checkedObj.val(), "false", "false");
+    });
+
 
     test("buildMapEditor()", function() {
         var result = editor.buildEditor({name:"date", type:"map", value:[
@@ -327,6 +351,27 @@ $(function() {
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
+    test("buildJSONFromBoolean()", function() {
+        editor.initEditor({type:"boolean", value:true});
+        var result = editor.buildJSON();
+        var expect = true;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromBoolean()", function() {
+        editor.initEditor({type:"boolean", value:false});
+        var result = editor.buildJSON();
+        var expect = false;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSONFromBoolean()", function() {
+        editor.initEditor({type:"boolean", value:true}, false);
+        var result = editor.buildJSON();
+        var expect = false;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
     test("buildJSONFromMap()", function() {
         editor.initEditor({type:"map", value:[
             { name:"date",   type:"string", value:"foo" },
@@ -371,6 +416,7 @@ $(function() {
                     "title" : "",
                     "url" : "",
                     "openIn" : "",
+                    "foo" : true,
                     "target" : []
                 }
             ],
@@ -380,6 +426,7 @@ $(function() {
                     "title" : "",
                     "url" : "",
                     "openIn" : "",
+                    "foo" : false,
                     "target" : []
                 }
             ]

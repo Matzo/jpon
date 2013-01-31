@@ -33,6 +33,8 @@
                 result = this.buildStringMultipleEditor(template, value);
             } else if (template.type == "number") {
                 result = this.buildNumberEditor(template, value);
+            } else if (template.type == "boolean") {
+                result = this.buildBooleanEditor(template, value);
             } else if (template.type == "map") {
                 result = this.buildMapEditor(template, value);
             } else if (template.type == "list") {
@@ -132,6 +134,34 @@
             }
             return mapObj;
         },
+        buildBooleanEditor : (function() {
+            var radioCount = 0;
+            return function(template, value) {
+                var list = $("<ul></ul>").addClass("inline").addClass("booleanEditor");
+                //var list = $("<ul></ul>");
+
+                var items = ["true", "false"];
+                for (i = 0; i < items.length; i++) {
+                    var li = $("<li></li>");
+                    var name = template.name + '_' + radioCount;
+                    var id = name + '_' + i;
+                    var val = items[i];
+                    var radio = $('<label for="' + id + '"><input type="radio" id="' + id + '" name="' + name + '" value="' + val + '"> ' + val + '</label>');
+                    li.append(radio);
+                    list.append(li);
+                }
+                console.log(value);
+                if (value === false) {
+                    $("input[type=radio]", list).val(["false"]);
+                } else if (template.value === false) {
+                    $("input[type=radio]", list).val(["false"]);
+                } else {
+                    $("input[type=radio]", list).val(["true"]);
+                }
+                radioCount++;
+                return list;
+            }
+        })(),
         buildSelectEditor : (function() {
             var radioCount = 0;
             return function(template, value) {
@@ -198,6 +228,8 @@
                 return this.buildJSONFromStringMultiple(editor);
             } else if (editor.hasClass("numberEditor")) {
                 return this.buildJSONFromNumber(editor);
+            } else if (editor.hasClass("booleanEditor")) {
+                return this.buildJSONFromBoolean(editor);
             } else if (editor.hasClass("mapEditor")) {
                 return this.buildJSONFromMap(editor);
             } else if (editor.hasClass("listEditor")) {
@@ -216,6 +248,14 @@
         },
         buildJSONFromNumber : function(editor) {
             return parseFloat(editor.val(), 10);
+        },
+        buildJSONFromBoolean : function(editor) {
+            var result = $("input[type=radio]:checked", editor).val();
+            if (result == "true") {
+                return true;
+            } else {
+                return false;
+            }
         },
         buildJSONFromMap : function(editor) {
             var obj = {};

@@ -1,5 +1,8 @@
+.accent_color {
+    color:orange;
+}
 .dark_color {
-    color:lightgray
+    color:lightgray;
 }
 h1:after {
     clear: both;
