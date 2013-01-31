@@ -177,7 +177,7 @@
                 return mapObj;
             };
             var moreProperty = function(mapObj) {
-                var more = $('<dt class="moreBtn">+</dt><dd></dd>');
+                var more = $('<dt class="moreBtn span2">+</dt><dd></dd>');
                 more.click(function() {
                     addProperty(mapObj, "", "");
                     mapObj.append(more);
