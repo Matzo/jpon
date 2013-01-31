@@ -130,19 +130,65 @@
         },
         buildMapEditor : function(template, value) {
             var mapObj = $("<dl></dl>").addClass("dl-horizontal").addClass("mapEditor");
-            var i, propTmpl, propName, propVal;
-            for (i = 0; i < template.value.length; i++) {
-                propTmpl = template.value[i];
-                if (propTmpl && propTmpl.name) {
-                    propName = propTmpl.name;
+            var i, propTmpl, propName, propVal, dt;
+            var key, val;
+            var keyEdit = function(_dt) {
+                if (0 < $("input", _dt).length) {
+                    return;
                 }
-                if (value && propName) {
-                    propVal = value[propName];
+                var _orgName = _dt.html();
+                var _input = $('<input type="text" value="' + _orgName + '" class="span2">');
+                _dt.html("");
+                _dt.append(_input);
+                _input.focus();
+                _input.bind("blur", function() {
+                    _dt.html(_input.val());
+                });
+            };
+            if (template.expandable && value) {
+                for (propName in value) {
+                    if (value.hasOwnProperty(propName)) {
+                        propVal = value[propName];
+                        propTmpl = {
+                            type:"string",
+                            name:propName,
+                            option:true,
+                            value:propVal
+                        };
+
+                        // dt
+                        dt = $("<dt></dt>").html(propName).addClass("editable");
+                        dt.click(function() {
+                            keyEdit($(this));
+                        });
+                        mapObj.append(dt);
+                        // dd
+                        mapObj.append($("<dd></dd>").append(this.buildEditor(propTmpl, propVal)));
+                    }
                 }
-                // dt
-                mapObj.append($("<dt></dt>").html(propName));
-                // dd
-                mapObj.append($("<dd></dd>").append(this.buildEditor(propTmpl, propVal)));
+            } else {
+                for (i = 0; i < template.value.length; i++) {
+                    propTmpl = template.value[i];
+                    if (propTmpl && propTmpl.name) {
+                        propName = propTmpl.name;
+                    }
+                    if (value && propName) {
+                        propVal = value[propName];
+                    }
+                    // dt
+                    dt = $("<dt></dt>").html(propName);
+                    if (template.expandable) {
+                        dt.addClass("editable");
+
+                        dt.click(function() {
+                            keyEdit($(this));
+                        });
+                    }
+                    mapObj.append(dt);
+                    // dd
+                    mapObj.append($("<dd></dd>").append(this.buildEditor(propTmpl, propVal)));
+
+                }
             }
             return mapObj;
         },
@@ -162,7 +208,6 @@
                     li.append(radio);
                     list.append(li);
                 }
-                console.log(value);
                 if (value === false) {
                     $("input[type=radio]", list).val(["false"]);
                 } else if (template.value === false) {

@@ -80,6 +80,10 @@ h1:after {
     margin-right: 5px;
     margin-bottom: 5px;
 }
+#editor dl.mapEditor dt.editable:hover {
+    background-color:#eee;
+    cursor: pointer;
+}
 
 footer {
     border-top: 1px solid #eee;

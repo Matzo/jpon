@@ -92,6 +92,25 @@
                     },
                 ]
             }
+        },
+        // sample4.json
+        {
+            filename : "sample4.json",
+            charset : "UTF-8",
+            template : {
+                type: "map",
+                value:[
+                    {
+                        name : "custom",
+                        type : "map",
+                        expandable:true,
+                        value : [
+                            { name:"key1", type:"string", value:"a" },
+                            { name:"key2", type:"string", value:"b" }
+                        ]
+                    }
+                ]
+            }
         }
     ];
 })(this.jQuery);

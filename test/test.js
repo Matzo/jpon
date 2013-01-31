@@ -40,6 +40,15 @@ $(function() {
                     ]
                 }
             },
+            {
+                name:"custom",
+                type:"map",
+                expandable:true,
+                value:[
+                    { name:"key1", type:"string" },
+                    { name:"key2", type:"string" }
+                ]
+            }
         ]
     };
 
@@ -172,6 +181,17 @@ $(function() {
         var resultTitle = $("input[name=title]", result);
         equal(resultTitle.size(), 1);
         equal(resultTitle.val(), "");
+    });
+
+    test("buildMapEditor() expandable", function() {
+        var result = editor.buildEditor({name:"date", type:"map", expandable:true, value:[
+            { name:"date",   type:"string" },
+            { name:"title",  type:"string" }
+        ]});
+
+        equal(result.get(0).tagName, 'DL');
+        var dt = $("dt", result);
+        ok(dt.hasClass("editable"));
     });
 
     test("buildListEditor()", function() {
@@ -495,7 +515,50 @@ $(function() {
                     "foo" : false,
                     "target" : []
                 }
-            ]
+            ],
+            "custom" : {
+                "key1" : "",
+                "key2" : ""
+            }
+        };
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("buildJSON() with object", function() {
+        editor.initEditor(template, {
+            "custom" : {
+                "customized_key1" : "a",
+                "customized_key2" : "b",
+                "customized_key3" : "c"
+            }
+        });
+        var result = editor.buildJSON();
+        var expect = {
+            "announce" : [
+                {
+                    "date" : "",
+                    "title" : "",
+                    "url" : "",
+                    "openIn" : "",
+                    "foo" : true,
+                    "target" : []
+                }
+            ],
+            "maintenance" : [
+                {
+                    "date" : "",
+                    "title" : "",
+                    "url" : "",
+                    "openIn" : "",
+                    "foo" : false,
+                    "target" : []
+                }
+            ],
+            "custom" : {
+                "customized_key1" : "a",
+                "customized_key2" : "b",
+                "customized_key3" : "c"
+            }
         };
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
