@@ -143,7 +143,7 @@
                 _dt.html("");
                 _dt.append(_input);
                 _input.focus();
-                _input.bind("blur", function() {
+                var _blur = function() {
                     _newKey = _input.val();
                     if (_newKey) {
                         _dt.html(_newKey);
@@ -151,6 +151,15 @@
                         _dt.next().remove();
                         _dt.remove();
                     }
+                };
+                _input.bind("keyup", function(e) {
+                    switch (e.keyCode) {
+                    case 13: // Enter
+                        _blur();
+                    }
+                });
+                _input.bind("blur", function() {
+                    _blur();
                 });
             };
             var addProperty = function(mapObj, propName, propVal, propTmpl) {
@@ -179,7 +188,7 @@
                 return mapObj;
             };
             var moreProperty = function(mapObj) {
-                var more = $('<dt class="moreBtn span2">+</dt><dd></dd>');
+                var more = $('<dt class="moreBtn span2">+</dt><dd>&nbsp;</dd>');
                 more.click(function() {
                     addProperty(mapObj, "", "");
                     mapObj.append(more);

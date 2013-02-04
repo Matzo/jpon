@@ -18,7 +18,7 @@ h1:after {
 }
 
 #editor dl {
-    margin:0px;
+    margin:10px 0px;
     padding:10px 0px;
 
     border-left: 8px solid lightgrey;
@@ -30,9 +30,12 @@ h1:after {
     line-height:25px;
 }
 #editor dl.mapEditor > dt.editable > input {
-    margin-bottom:-25px;
     height:20px;
     line-height:15px;
+}
+#editor ol,
+#editor ul {
+    margin:0px;
 }
 #editor ol.listEditor > li,
 #editor ul.listEditor > li {
@@ -51,6 +54,7 @@ h1:after {
 #editor ol.listEditor > li:hover,
 #editor ul.listEditor > li:hover {
     background-color:#fbfbfb;
+    cursor: all-scroll;
 }
 
 #editor ol.listEditor > li.moreBtn,
@@ -126,6 +130,7 @@ h1:after {
 footer {
     border-top: 1px solid #eee;
     padding:10px;
+    margin-top:20px;
     margin-bottom:40px;
     text-align: center
 }

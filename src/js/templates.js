@@ -40,6 +40,7 @@
                         max:10,
                         value:{
                             type:"map",
+                            expandable:true,
                             value:[
                                 { name:"date",   type:"string" },
                                 { name:"title",  type:"string" },
