@@ -1,18 +1,18 @@
 (function($) {
     if (!$) return;
-    if (!this.jsoned) this.jsoned = {};
-    if (jsoned.Editor) return;
+    if (!this.jpon) this.jpon = {};
+    if (jpon.Editor) return;
 
     // for IE
     var _DEFAULT = "default";
 
-    jsoned.Editor = function(options) {
+    jpon.Editor = function(options) {
         this.options = $.extend({
             editorAreaId : "editor"
         }, options);
     }
 
-    jsoned.Editor.prototype = {
+    jpon.Editor.prototype = {
         initEditor : function(template, value) {
             var editorObj = this.buildEditor(template, value);
             var self = this;
@@ -155,12 +155,14 @@
             };
             var addProperty = function(mapObj, propName, propVal, propTmpl) {
                 var dt,dd;
-                propTmpl = propTmpl || {
-                    type:"string",
-                    name:propName,
-                    option:true,
-                    value:propVal
-                };
+                propTmpl = propTmpl || template.value[0];
+                propTmpl.name = propName;
+                //propTmpl = propTmpl || {
+                //    type:"string",
+                //    name:propName,
+                //    option:true,
+                //    value:propVal
+                //};
                 // dt
                 dt = $("<dt></dt>").html(propName);
                 if (template.expandable) {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>JPON</title>
-<link rel="stylesheet" href="css/jsoned.css">
+<link rel="stylesheet" href="css/jpon.css">
 <script type="text/javascript" src="lib/jquery.min.js"></script>
 <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 <script src="lib/bootstrap/js/bootstrap.js"></script>
@@ -12,7 +12,7 @@
 
 <script type="text/javascript" src="js/editor.js"></script>
 <script type="text/javascript" src="js/storage.js"></script>
-<script type="text/javascript" src="js/jsoned.js"></script>
+<script type="text/javascript" src="js/jpon.js"></script>
 <script type="text/javascript" src="js/templates.js"></script>
 <script>
 $(function() {
@@ -67,7 +67,11 @@ $(function() {
                 type:"map",
                 expandable:true,
                 value:[
-                    { name:"key1", type:"string" },
+                    { name:"key1", type:"map", value:[
+                        { name:"name", type:"string" },
+                        { name:"score", type:"string" },
+                        { name:"type", type:"string" }
+                    ]},
                     { name:"key2", type:"string" }
                 ]
             }
@@ -76,9 +80,9 @@ $(function() {
 
     var value = {};
 
-    new jsoned.Jsoned({
+    new jpon.Jpon({
         template: template,
-        templateMaster:jsoned.Templates,
+        templateMaster:jpon.Templates,
         value: value
     });
 });

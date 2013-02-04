@@ -1,6 +1,6 @@
 $(function() {
-    var editor = new jsoned.Editor();
-    var storage = new jsoned.Storage();
+    var editor = new jpon.Editor();
+    var storage = new jpon.Storage();
     var template = {
         type:"map",
         value:[

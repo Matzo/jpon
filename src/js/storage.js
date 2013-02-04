@@ -1,16 +1,16 @@
 (function($) {
     if (!$) return;
-    if (!this.jsoned) this.jsoned = {};
-    if (jsoned.Storage) return;
+    if (!this.jpon) this.jpon = {};
+    if (jpon.Storage) return;
 
-    jsoned.Storage = function(options) {
+    jpon.Storage = function(options) {
         this.options = $.extend({
             inputBoxId : "inputBox",
             outputBoxId : "outputBox"
         }, options);
     }
 
-    jsoned.Storage.prototype = {
+    jpon.Storage.prototype = {
         initStorage : function() {
             var self = this;
 

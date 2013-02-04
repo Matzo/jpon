@@ -16,11 +16,24 @@ h1:after {
 #editor dl {
     margin:0px;
     padding:10px 0px;
+
+    border-left: 8px solid lightgrey;
+    border-top-left-radius:10px;
+    border-bottom-left-radius:10px;
+}
+#editor dl.mapEditor > dt {
+    margin-bottom:-25px;
+    line-height:25px;
+}
+#editor dl.mapEditor > dt.editable > input {
+    margin-bottom:-25px;
+    height:20px;
+    line-height:15px;
 }
 #editor ol.listEditor > li,
 #editor ul.listEditor > li {
-    border: 1px solid #f5f5f5;
-    border-left: 8px double lightgrey;
+/*    border: 1px solid #f5f5f5;*/
+/*    border-left: 8px double lightgrey;*/
     background-color:#fff;
     margin-bottom:10px;
 }

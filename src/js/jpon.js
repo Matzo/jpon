@@ -1,9 +1,9 @@
 (function($) {
     if (!$) return;
-    if (!this.jsoned) this.jsoned = {};
-    if (jsoned.Jsoned) return;
+    if (!this.jpon) this.jpon = {};
+    if (jpon.Jpon) return;
 
-    jsoned.Jsoned = function(options) {
+    jpon.Jpon = function(options) {
         var self = this;
         this.options = $.extend({
             controllerId: "controller",
@@ -28,13 +28,13 @@
         this.initControls();
     }
 
-    jsoned.Jsoned.prototype = {
+    jpon.Jpon.prototype = {
         initEditor : function(template, value) {
-            this.editor = new jsoned.Editor(this.options);
+            this.editor = new jpon.Editor(this.options);
             this.editor.initEditor(template, value);
         },
         initStorage : function() {
-            this.storage = new jsoned.Storage(this.options);
+            this.storage = new jpon.Storage(this.options);
             this.storage.initStorage();
         },
 

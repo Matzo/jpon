@@ -1,9 +1,9 @@
 (function($) {
     if (!$) return;
-    if (!this.jsoned) this.jsoned = {};
-    if (jsoned.Templates) return;
+    if (!this.jpon) this.jpon = {};
+    if (jpon.Templates) return;
 
-    jsoned.Templates = [
+    jpon.Templates = [
         // sample1.json
         {
             filename : "sample1.json",
