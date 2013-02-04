@@ -16,73 +16,10 @@
 <script type="text/javascript" src="js/templates.js"></script>
 <script>
 $(function() {
-    var template = {
-        type:"map",
-        value:[
-            {
-                name:"mapObject1",
-                type:"list",
-                expandable:true,
-                min:1,
-                max:10,
-                value:{
-                    type:"map",
-                    value:[
-                        { name:"date",        type:"string" },
-                        { name:"title",       type:"string" },
-                        { name:"description", type:"string-multi" },
-                        { name:"option",      type:"string", option:true },
-                        { name:"nullable",    type:"string", nullable:true },
-                        { name:"score",       type:"number" },
-                        { name:"type", type:"select", value:["select1", "select2", "select3"] },
-                        { name:"boolean", type:"boolean", value:true },
-                        { name:"attributes", type:"select-multi", value:["attr1", "attr2", "attr3", "attr4"] }
-                    ]
-                }
-            },
-            {
-                name:"mapObject2",
-                type:"list",
-                expandable:true,
-                min:1,
-                max:10,
-                value:{
-                    type:"map",
-                    expandable:true,
-                    value:[
-                        { name:"date",   type:"string" },
-                        { name:"title",  type:"string" },
-                        { name:"description", type:"string-multi" },
-                        { name:"option",      type:"string-multi", option:true },
-                        { name:"nullable",    type:"string-multi", nullable:true },
-                        { name:"score",       type:"number" },
-                        { name:"type", type:"select", value:["select1", "select2", "select3"] },
-                        { name:"boolean", type:"boolean", value:false },
-                        { name:"attributes", type:"select-multi", value:["attr1", "attr2", "attr3", "attr4"] }
-                    ]
-                }
-            },
-            {
-                name:"custom",
-                type:"map",
-                expandable:true,
-                value:[
-                    { name:"key1", type:"map", value:[
-                        { name:"name", type:"string" },
-                        { name:"score", type:"string" },
-                        { name:"type", type:"string" }
-                    ]},
-                    { name:"key2", type:"string" }
-                ]
-            }
-        ]
-    }
-
     var value = {};
-
     new jpon.Jpon({
-        template: template,
-        templateMaster:jpon.Templates,
+//        template: template,
+        templateMaster:jsoned.Templates,
         value: value
     });
 });
@@ -93,8 +30,10 @@ $(function() {
 <h1>J<span class="accent_color">P</span>ON</h1>
 </header>
 
-<h4 id="templateName">Sample Template</h4>
 <section id="inputBox">
+</section>
+
+<section id="templateBox">
 </section>
 
 <section id="editor">

@@ -1,56 +1,7 @@
 $(function() {
     var editor = new jpon.Editor();
     var storage = new jpon.Storage();
-    var template = {
-        type:"map",
-        value:[
-            {
-                name:"announce",
-                type:"list",
-                expandable:true,
-                min:1,
-                max:10,
-                value:{
-                    type:"map",
-                    value:[
-                        { name:"date",   type:"string" },
-                        { name:"title",  type:"string" },
-                        { name:"url",    type:"string" },
-                        { name:"openIn", type:"select", value:["window", "iframe", ""] },
-                        { name:"foo",    type:"boolean", value:true },
-                        { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
-                    ]
-                }
-            },
-            {
-                name:"maintenance",
-                type:"list",
-                expandable:true,
-                min:1,
-                max:10,
-                value:{
-                    type:"map",
-                    value:[
-                        { name:"date",   type:"string" },
-                        { name:"title",  type:"string" },
-                        { name:"url",    type:"string" },
-                        { name:"openIn", type:"select", value:["window", "iframe", ""] },
-                        { name:"foo",    type:"boolean", value:false },
-                        { name:"target", type:"select-multi", value:["android", "windows", "ios", "web"] }
-                    ]
-                }
-            },
-            {
-                name:"custom",
-                type:"map",
-                expandable:true,
-                value:[
-                    { name:"key1", type:"string" },
-                    { name:"key2", type:"string" }
-                ]
-            }
-        ]
-    };
+    var template = jpon.Templates[0].template;
 
     module("Editor");
     test("buildStringEditor()", function() {
@@ -217,7 +168,7 @@ $(function() {
 
 
     test("buildListEditor()", function() {
-        var result = editor.buildEditor({name:"announce", type:"list", min:5, value:
+        var result = editor.buildEditor({name:"mapObject1", type:"list", min:5, value:
             {
                 type:"map",
                 value:[
@@ -239,7 +190,7 @@ $(function() {
     });
 
     test("buildListEditor()", function() {
-        var result = editor.buildEditor({name:"announce", type:"list", min:3, value:
+        var result = editor.buildEditor({name:"mapObject1", type:"list", min:3, value:
             {
                 type:"map",
                 value:[
@@ -274,7 +225,7 @@ $(function() {
 
 
     test("buildSelectEditor()", function() {
-        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""]});
+        var result = editor.buildEditor({name:"type", type:"select", value:["window", "iframe", ""]});
 
         var inputObj = $("input[type=radio]", result);
         equal(inputObj.get(0).value, "window");
@@ -283,21 +234,21 @@ $(function() {
     });
 
     test("buildSelectEditor()", function() {
-        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], "default":"iframe"});
+        var result = editor.buildEditor({name:"type", type:"select", value:["window", "iframe", ""], "default":"iframe"});
 
         var checkedObj = $("input[type=radio]:checked", result);
         equal(checkedObj.val(), "iframe", "iframe");
     });
 
     test("buildSelectEditor()", function() {
-        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""], "default":"window"}, "");
+        var result = editor.buildEditor({name:"type", type:"select", value:["window", "iframe", ""], "default":"window"}, "");
 
         var checkedObj = $("input[type=radio]:checked", result);
         equal(checkedObj.val(), "", "");
     });
 
     test("buildSelectEditor()", function() {
-        var result = editor.buildEditor({name:"openIn", type:"select", value:["window", "iframe", ""]}, "iframe");
+        var result = editor.buildEditor({name:"type", type:"select", value:["window", "iframe", ""]}, "iframe");
 
         var checkedObj = $("input[type=radio]:checked", result);
         equal(checkedObj.val(), "iframe", "iframe");
@@ -494,26 +445,31 @@ $(function() {
 
     test("buildJSON()", function() {
         editor.initEditor(template);
+        console.log(template);
         var result = editor.buildJSON();
         var expect = {
-            "announce" : [
+            "mapObject1" : [
                 {
                     "date" : "",
                     "title" : "",
-                    "url" : "",
-                    "openIn" : "",
-                    "foo" : true,
-                    "target" : []
+                    "description" : "",
+                    "nullable" : null,
+                    "score" : 0,
+                    "type" : null,
+                    "attributes" : [],
+                    "foo" : true
                 }
             ],
-            "maintenance" : [
+            "mapObject2" : [
                 {
                     "date" : "",
                     "title" : "",
-                    "url" : "",
-                    "openIn" : "",
-                    "foo" : false,
-                    "target" : []
+                    "description" : "",
+                    "nullable" : null,
+                    "score" : 0,
+                    "type" : null,
+                    "attributes" : [],
+                    "foo" : false
                 }
             ],
             "custom" : {
@@ -526,6 +482,9 @@ $(function() {
 
     test("buildJSON() with object", function() {
         editor.initEditor(template, {
+            "mapObject1" : [{
+                "option" : "yes",
+            }],
             "custom" : {
                 "customized_key1" : "a",
                 "customized_key2" : "b",
@@ -534,24 +493,29 @@ $(function() {
         });
         var result = editor.buildJSON();
         var expect = {
-            "announce" : [
+            "mapObject1" : [
                 {
                     "date" : "",
                     "title" : "",
-                    "url" : "",
-                    "openIn" : "",
-                    "foo" : true,
-                    "target" : []
+                    "description" : "",
+                    "option" : "yes",
+                    "nullable" : null,
+                    "score" : 0,
+                    "type" : null,
+                    "attributes" : [],
+                    "foo" : true
                 }
             ],
-            "maintenance" : [
+            "mapObject2" : [
                 {
                     "date" : "",
                     "title" : "",
-                    "url" : "",
-                    "openIn" : "",
-                    "foo" : false,
-                    "target" : []
+                    "description" : "",
+                    "nullable" : null,
+                    "score" : 0,
+                    "type" : null,
+                    "attributes" : [],
+                    "foo" : false
                 }
             ],
             "custom" : {
@@ -563,5 +527,13 @@ $(function() {
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
-    module("Storage");
+    module("Jpon");
+    test("selectTemplate()", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates,
+            value: {}
+        });
+        pon.selectTemplate("sample2.json");
+        equal($("#selectedTemplateName").html(), "sample2.json");
+    });
 });

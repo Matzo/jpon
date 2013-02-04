@@ -380,6 +380,9 @@
         },
         buildJSONFromSelect : function(editor) {
             var result = $("input[type=radio]:checked", editor).val();
+            if (result === undefined) {
+                result = null;
+            }
             return result;
         },
         buildJSONFromSelectMultiple : function(editor) {
