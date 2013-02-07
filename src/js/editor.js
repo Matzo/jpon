@@ -203,12 +203,13 @@
                 for (propName in value) {
                     if (value.hasOwnProperty(propName)) {
                         propVal = value[propName];
-                        propTmpl = {
-                            type:"string",
-                            name:propName,
-                            option:true,
-                            value:propVal
-                        };
+                        propTmpl = template.value[0];
+                        //propTmpl = {
+                        //    type:"string",
+                        //    name:propName,
+                        //    option:true,
+                        //    value:propVal
+                        //};
 
                         addProperty(mapObj, propName, propVal, propTmpl);
                     }

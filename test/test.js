@@ -533,7 +533,7 @@ $(function() {
             templateMaster:jpon.Templates,
             value: {}
         });
-        pon.selectTemplate("sample2.json");
-        equal($("#selectedTemplateName").html(), "sample2.json");
+        pon.selectTemplate("map_x_map.json");
+        equal($("#selectedTemplateName").html(), "map_x_map.json");
     });
 });

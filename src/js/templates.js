@@ -6,7 +6,7 @@
     jpon.Templates = [
         // sample1.json
         {
-            filename : "sample1.json",
+            filename : "basic.json",
             charset : "UTF-8",
             template : {
                 type:"map",
@@ -69,7 +69,7 @@
 
         // sample2.json
         {
-            filename : "sample2.json",
+            filename : "map_x_map.json",
             charset : "UTF-8",
             template : {
                 type:"map",
@@ -95,13 +95,13 @@
         },
         // sample3.json
         {
-            filename : "sample3.json",
+            filename : "multibyte.json",
             charset : "Shift_JIS",
             template : {
                 type:"map",
                 value:[
                     {
-                        name:"multibyte",
+                        name:"Shift_JIS String",
                         type:"map",
                         value:[
                             { name:"foo",   type:"string" },
@@ -113,7 +113,7 @@
         },
         // sample4.json
         {
-            filename : "sample4.json",
+            filename : "expandable_map.json",
             charset : "UTF-8",
             template : {
                 type: "map",
@@ -123,8 +123,14 @@
                         type : "map",
                         expandable:true,
                         value : [
-                            { name:"key1", type:"string", value:"a" },
-                            { name:"key2", type:"string", value:"b" }
+                            { name:"2012/01/01", type:"map", value:[
+                                { name:"title",  type:"string" },
+                                { name:"description", type:"string-multi" },
+                                { name:"score",       type:"number" },
+                                { name:"type",   type:"select", value:["select1", "select2", "select3"] },
+                                { name:"attributes", type:"select-multi", value:["attr1", "attr2", "attr3"] },
+                                { name:"foo",    type:"boolean", value:true }
+                            ]}
                         ]
                     }
                 ]
