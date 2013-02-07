@@ -185,10 +185,13 @@ footer {
 .basket:hover {
     background-color: lightyellow;
 }
+#dragAndDropBox > form {
+    margin:0px;
+}
 #dragAndDropBox > div {
-  font-size: 85%;
-  color:gray;
-  text-align:right;
+    font-size: 85%;
+    color:gray;
+    text-align:right;
 }
 
 #outputBox textarea {
