@@ -3,6 +3,8 @@
     if (!this.jpon) this.jpon = {};
     if (jpon.Jpon) return;
 
+    jpon.location = location;
+
     jpon.Jpon = function(options) {
         var self = this;
         this.options = $.extend({
@@ -17,6 +19,11 @@
         this.initControls();
         this.initEditor(this.options.template, this.options.value);
         this.initStorage();
+
+        this.initWithHash();
+        $(window).bind("hashchange", function() {
+            self.initWithHash();
+        });
     }
 
     jpon.Jpon.prototype = {
@@ -40,12 +47,14 @@
             // save
             $("#saveBtn").click(function() {
                 self.storage.save(self.editor.buildJSONString());
+                return false;
             });
 
             // preview
             $("#displayBtn").click(function() {
                 var filename = self.options.selectedMaster ? self.options.selectedMaster.filename : "data.json";
                 self.storage.display(self.editor.buildJSONString(), filename);
+                return false;
             });
 
             // templates
@@ -57,7 +66,7 @@
             selectTemplateHtml += '<ul class="dropdown-menu">';
             for (var i = 0; i < this.options.templateMaster.length; i++) {
                 var tpl = this.options.templateMaster[i];
-                selectTemplateHtml += '<li><a href="#" class="item">' + tpl.filename + '</a></li>';
+                selectTemplateHtml += '<li><a href="#' + tpl.filename + '" class="item">' + tpl.filename + '</a></li>';
             }
             selectTemplateHtml += '</ul>';
             selectTemplateHtml += '</div>';
@@ -69,6 +78,21 @@
             });
 
             this.selectTemplate(this.options.templateMaster[0].filename);
+        },
+
+        initWithHash : function() {
+            var self = this;
+            if (jpon.location.hash) {
+                var hash = jpon.location.hash.replace(/^#/, "");
+                $.each(self.options.templateMaster, function(i, master) {
+                    if (master.filename == hash) {
+                        self.selectTemplate(hash);
+                        return;
+                    }
+                });
+            } else {
+                self.selectTemplate(self.options.templateMaster[0].filename);
+            }
         },
 
         selectTemplate : function(filename) {
@@ -85,7 +109,6 @@
                     self.options.selectedMaster = e;
                     return false;
                 }
-
             });
             this.initEditor(self.options.template);
         },

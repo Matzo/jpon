@@ -556,7 +556,14 @@ $(function() {
         equal(pon.editor.buildJSONString(), 'var data = {"foo":"111","bar":"222"} ;');
     });
 
-    module("Jpon");
+    module("Jpon", {
+        setup : function() {
+            jpon.location = {};
+        },
+        teardown : function() {
+            jpon.location = {};
+        }
+    });
     test("selectTemplate()", function() {
         var pon = new jpon.Jpon({
             templateMaster:jpon.Templates,
@@ -564,5 +571,23 @@ $(function() {
         });
         pon.selectTemplate("map_x_map.json");
         equal($("#selectedTemplateName").html(), "map_x_map.json");
+    });
+
+    test("init with hash", function() {
+        jpon.location.hash = "#prefix_suffix.json";
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates,
+            value: {}
+        });
+        equal($("#selectedTemplateName").html(), "prefix_suffix.json");
+    });
+
+    test("init with invalid hash", function() {
+        jpon.location.hash = "#prefix_suffix.jsonnnn";
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates,
+            value: {}
+        });
+        equal($("#selectedTemplateName").html(), "basic.json");
     });
 });
