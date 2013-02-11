@@ -3,7 +3,7 @@ JPON
 
 edit a JSON with specified format.
 
-Here is [JPON Demo](http://matzo.github.com/jpon/).
+Here is [JPON Demo](http://matzo.github.com/jpon_demo/).
 
 ### Template Types ###
 <table>
