@@ -69,24 +69,22 @@
 
             $.each(self.options.templateMaster, function(i, master) {
                 if (file.name == master.filename) {
+                    self.options.selectedMaster = master;
                     self.options.template = master.template;
-                    charset = master.charset;
+                    charset = master.charset || charset;
                     return false;
                 }
             });
 
-            var loading = true;
-            if (/\.js$|\.json$/.test(file.name)) {
-                reader.onload = function (evt) {
-                    $("#inputForm").get(0).reset();
-                    if (self.options.loadSuccess) {
-                        self.options.loadSuccess(reader.result, file.name);
-                    } else {
-                        self.loadSuccess(reader.result, file.name);
-                    }
+            reader.onload = function (evt) {
+                $("#inputForm").get(0).reset();
+                if (self.options.loadSuccess) {
+                    self.options.loadSuccess(reader.result, file.name);
+                } else {
+                    self.loadSuccess(reader.result, file.name);
                 }
-                reader.readAsText(file, charset);
             }
+            reader.readAsText(file, charset);
         },
         loadSuccess : function(jsonString, filename) {
         //    console.log(jsonString, filename);

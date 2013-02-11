@@ -4,7 +4,7 @@
     if (jpon.Templates) return;
 
     jpon.Templates = [
-        // sample1.json
+        // sample1
         {
             filename : "basic.json",
             charset : "UTF-8",
@@ -67,7 +67,7 @@
             }
         },
 
-        // sample2.json
+        // sample2
         {
             filename : "map_x_map.json",
             charset : "UTF-8",
@@ -93,7 +93,7 @@
                 ]
             }
         },
-        // sample3.json
+        // sample3
         {
             filename : "multibyte.json",
             charset : "Shift_JIS",
@@ -111,7 +111,7 @@
                 ]
             }
         },
-        // sample4.json
+        // sample4
         {
             filename : "expandable_map.json",
             charset : "UTF-8",
@@ -133,6 +133,19 @@
                             ]}
                         ]
                     }
+                ]
+            }
+        },
+        // sample5
+        {
+            filename : "prefix_suffix.json",
+            prefix : "var json = ",
+            suffix : ";",
+            template : {
+                type:"map",
+                value:[
+                    { name:"foo", type:"string" },
+                    { name:"bar", type:"string" }
                 ]
             }
         }

@@ -9,10 +9,8 @@
             controllerId: "controller",
             saveBtnId : "saveBtn",
             displayBtnId : "displayBtn",
-            loadSuccess :function(jsonString, filename) {
-                var jsonObj = JSON.parse(jsonString);
-                self.selectTemplate(filename);
-                self.editor.initEditor(self.options.template, jsonObj);
+            loadSuccess : function(jsonString, filename) {
+                self.parseJSON(jsonString, filename);
             }
         }, options);
 
@@ -90,6 +88,18 @@
 
             });
             this.initEditor(self.options.template);
+        },
+
+        parseJSON : function(jsonString, filename) {
+            var prefixPattern = /^[^{]*/;
+            var suffixPattern = /[^}]*$/;
+            var prefix = jsonString.match(prefixPattern);
+            var suffix = jsonString.match(suffixPattern);
+            var jsonObj = JSON.parse(jsonString.replace(prefixPattern, "").replace(suffixPattern, ""));
+            this.selectTemplate(filename);
+            this.editor.initEditor(this.options.template, jsonObj);
+            this.editor.updatePrefix(prefix);
+            this.editor.updateSuffix(suffix);
         }
     }
 })(this.jQuery);

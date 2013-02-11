@@ -445,7 +445,6 @@ $(function() {
 
     test("buildJSON()", function() {
         editor.initEditor(template);
-        console.log(template);
         var result = editor.buildJSON();
         var expect = {
             "mapObject1" : [
@@ -525,6 +524,36 @@ $(function() {
             }
         };
         equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("prefix suffix without value", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        pon.selectTemplate("prefix_suffix.json");
+        equal($("#prefix").html(), "var json = ");
+        equal($("#suffix").html(), ";");
+        equal(pon.editor.buildJSONString(), 'var json = {"foo":"","bar":""};');
+    });
+
+    test("prefix suffix with value", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        pon.parseJSON('var json = {"foo":"111","bar":"222"};', "prefix_suffix.json");
+        equal($("#prefix").html(), "var json = ");
+        equal($("#suffix").html(), ";");
+        equal(pon.editor.buildJSONString(), 'var json = {"foo":"111","bar":"222"};');
+    });
+
+    test("prefix suffix with customized", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        pon.parseJSON('var data = {"foo":"111","bar":"222"} ;', "prefix_suffix.json");
+        equal($("#prefix").html(), "var data = ");
+        equal($("#suffix").html(), " ;");
+        equal(pon.editor.buildJSONString(), 'var data = {"foo":"111","bar":"222"} ;');
     });
 
     module("Jpon");

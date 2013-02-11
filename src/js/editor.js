@@ -8,7 +8,9 @@
 
     jpon.Editor = function(options) {
         this.options = $.extend({
-            editorAreaId : "editor"
+            editorAreaId : "editor",
+            prefixId : "prefix",
+            suffixId : "suffix"
         }, options);
     }
 
@@ -16,9 +18,36 @@
         initEditor : function(template, value) {
             var editorObj = this.buildEditor(template, value);
             var self = this;
+            var editorArea = $("#" + this.options.editorAreaId);
+            this.prefix = $("#" + this.options.prefixId);
+            this.suffix = $("#" + this.options.suffixId);
 
-            $("#" + this.options.editorAreaId).html("");
-            $("#" + this.options.editorAreaId).append(editorObj);
+            editorArea.html("");
+            editorArea.append(editorObj);
+
+            this.prefix.html("");
+            this.prefix.append(this.buildPrefixEditor(this.options.selectedMaster));
+            this.suffix.html("");
+            this.suffix.append(this.buildSuffixEditor(this.options.selectedMaster));
+
+            this.initAppendix(this.prefix);
+            this.initAppendix(this.suffix);
+        },
+
+        initAppendix : function(part) {
+            $(part).unbind();
+            part.click(function() {
+                var original = part.html();
+                if (0 < $("textarea", part).length) {
+                    return
+                }
+                var textarea = $('<textarea>' + original + '</textarea>');
+                textarea.bind("blur", function() {
+                    part.html($(this).val());
+                });
+                part.html(textarea);
+                $(textarea).focus();
+            });
         },
 
         /**
@@ -308,11 +337,30 @@
             }
         })(),
 
+        buildPrefixEditor : function(master) {
+            return (master && master.prefix) || "";
+        },
+
+        buildSuffixEditor : function(master) {
+            return (master && master.suffix) || "";
+        },
+
+        updatePrefix : function(newPrefix) {
+            this.prefix.html(newPrefix);
+        },
+
+        updateSuffix : function(newSuffix) {
+            this.suffix.html(newSuffix);
+        },
+
         /**
          * JSON
          */
         buildJSONString : function() {
-            return JSON.stringify(this.buildJSON());
+            var prefix = $("#" + this.options.prefixId).html();
+            var suffix = $("#" + this.options.suffixId).html();
+
+            return prefix + JSON.stringify(this.buildJSON()) + suffix;
         },
         buildJSON : function() {
             var rootEditor = $("#" + this.options.editorAreaId).children();
