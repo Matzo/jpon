@@ -22,32 +22,22 @@
             this.prefix = $("#" + this.options.prefixId);
             this.suffix = $("#" + this.options.suffixId);
 
-            editorArea.html("");
-            editorArea.append(editorObj);
+            editorArea.html(editorObj);
 
-            this.prefix.html("");
-            this.prefix.append(this.buildPrefixEditor(this.options.selectedMaster));
-            this.suffix.html("");
-            this.suffix.append(this.buildSuffixEditor(this.options.selectedMaster));
+            this.prefix.html(this.buildPrefixEditor(this.options.selectedMaster));
+            this.suffix.html(this.buildSuffixEditor(this.options.selectedMaster));
 
             this.initAppendix(this.prefix);
             this.initAppendix(this.suffix);
         },
 
         initAppendix : function(part) {
-            $(part).unbind();
-            part.click(function() {
-                var original = part.html();
-                if (0 < $("textarea", part).length) {
-                    return
-                }
-                var textarea = $('<textarea>' + original + '</textarea>');
-                textarea.bind("blur", function() {
-                    part.html($(this).val());
-                });
-                part.html(textarea);
-                $(textarea).focus();
-            });
+            var $part = $(part);
+            if ($part.html()) {
+                $part.show();
+            } else {
+                $part.hide();
+            }
         },
 
         /**
@@ -360,7 +350,7 @@
             var prefix = $("#" + this.options.prefixId).html();
             var suffix = $("#" + this.options.suffixId).html();
 
-            return prefix + JSON.stringify(this.buildJSON()) + suffix;
+            return this.unescapeHtml(prefix) + JSON.stringify(this.buildJSON()) + this.unescapeHtml(suffix);
         },
         buildJSON : function() {
             var rootEditor = $("#" + this.options.editorAreaId).children();
@@ -450,6 +440,9 @@
                 list.push(this.value);
             });
             return list;
+        },
+        unescapeHtml : function(pattern) {
+            return pattern.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
         }
     }
 

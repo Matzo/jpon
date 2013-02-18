@@ -139,8 +139,8 @@
         // sample5
         {
             filename : "prefix_suffix.json",
-            prefix : "var json = ",
-            suffix : ";",
+            prefix : "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = ",
+            suffix : ";\nvar data2 = {\"aaa\":[1,2,3]};",
             template : {
                 type:"map",
                 value:[

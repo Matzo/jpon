@@ -526,34 +526,47 @@ $(function() {
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
+    test("escape regexp", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        equal(pon.escapeRegexp("`~!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?"), "`~!@#\\$%\\^&\\*\\(\\)-_=\\+\\[{\\]}\\\\\\|;:'\",<.>/\\?");
+    });
+    test("unescape html", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        equal(pon.editor.unescapeHtml("&amp;&lt;&gt;"), "&<>");
+    });
+
     test("prefix suffix without value", function() {
         var pon = new jpon.Jpon({
             templateMaster:jpon.Templates
         });
         pon.selectTemplate("prefix_suffix.json");
-        equal($("#prefix").html(), "var json = ");
-        equal($("#suffix").html(), ";");
-        equal(pon.editor.buildJSONString(), 'var json = {"foo":"","bar":""};');
+        equal(pon.editor.unescapeHtml($("#prefix").html()), "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = ");
+        equal(pon.editor.unescapeHtml($("#suffix").html()), ";\nvar data2 = {\"aaa\":[1,2,3]};");
+        equal(pon.editor.buildJSONString(), "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = {\"foo\":\"\",\"bar\":\"\"};\nvar data2 = {\"aaa\":[1,2,3]};");
     });
 
     test("prefix suffix with value", function() {
         var pon = new jpon.Jpon({
             templateMaster:jpon.Templates
         });
-        pon.parseJSON('var json = {"foo":"111","bar":"222"};', "prefix_suffix.json");
-        equal($("#prefix").html(), "var json = ");
-        equal($("#suffix").html(), ";");
-        equal(pon.editor.buildJSONString(), 'var json = {"foo":"111","bar":"222"};');
+        pon.parseJSON("var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = {\"foo\":\"111\",\"bar\":\"222\"};\nvar data2 = {\"aaa\":[1,2,3]};", "prefix_suffix.json");
+        equal(pon.editor.unescapeHtml($("#prefix").html()), "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = ");
+        equal(pon.editor.unescapeHtml($("#suffix").html()), ";\nvar data2 = {\"aaa\":[1,2,3]};");
+        equal(pon.editor.buildJSONString(), "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = {\"foo\":\"111\",\"bar\":\"222\"};\nvar data2 = {\"aaa\":[1,2,3]};");
     });
 
     test("prefix suffix with customized", function() {
         var pon = new jpon.Jpon({
             templateMaster:jpon.Templates
         });
-        pon.parseJSON('var data = {"foo":"111","bar":"222"} ;', "prefix_suffix.json");
-        equal($("#prefix").html(), "var data = ");
-        equal($("#suffix").html(), " ;");
-        equal(pon.editor.buildJSONString(), 'var data = {"foo":"111","bar":"222"} ;');
+        pon.parseJSON("var data = {\"foo\":\"111\",\"bar\":\"222\"} ;", "prefix_suffix.json");
+        equal(pon.editor.unescapeHtml($("#prefix").html()), "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = ");
+        equal(pon.editor.unescapeHtml($("#suffix").html()), ";\nvar data2 = {\"aaa\":[1,2,3]};");
+        equal(pon.editor.buildJSONString(), "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\",<.>/?\"};\nvar json = {\"foo\":\"\",\"bar\":\"\"};\nvar data2 = {\"aaa\":[1,2,3]};");
     });
 
     module("Jpon", {

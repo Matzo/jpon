@@ -113,16 +113,22 @@
             this.initEditor(self.options.template);
         },
 
+        escapeRegexp : function(pattern) {
+            return pattern.replace(/([\$\^\*\(\)\+\[\]\\\|\?])/g, "\\$1");
+        },
+
         parseJSON : function(jsonString, filename) {
-            var prefixPattern = /^[^{]*/;
-            var suffixPattern = /[^}]*$/;
-            var prefix = jsonString.match(prefixPattern);
-            var suffix = jsonString.match(suffixPattern);
-            var jsonObj = JSON.parse(jsonString.replace(prefixPattern, "").replace(suffixPattern, ""));
             this.selectTemplate(filename);
-            this.editor.initEditor(this.options.template, jsonObj);
-            this.editor.updatePrefix(prefix);
-            this.editor.updateSuffix(suffix);
+            var prefixPattern = new RegExp("^" + this.escapeRegexp(this.options.selectedMaster.prefix || ""));
+            var suffixPattern = new RegExp(this.escapeRegexp(this.options.selectedMaster.suffix || "") + "$");
+
+            try {
+                var jsonObj = JSON.parse(jsonString.replace(prefixPattern, "").replace(suffixPattern, ""));
+                this.editor.initEditor(this.options.template, jsonObj);
+            } catch(e) {
+            }
+//            this.editor.updatePrefix(prefix);
+//            this.editor.updateSuffix(suffix);
         }
     }
 })(this.jQuery);
