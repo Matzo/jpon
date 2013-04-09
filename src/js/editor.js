@@ -42,10 +42,10 @@
 
         nextFocus: function(current) {
             var last;
-            $("#editor input.stringEditor").each(function(i, e) {
+            $("#editor input.stringEditor, #editor input.numberEditor, #editor textarea.stringMultipleEditor").each(function(i, e) {
                 if (last == current) {
                     $(e).focus();
-                    return;
+                    return false;
                 }
                 last = e;
             });
@@ -77,8 +77,29 @@
             return result;
         },
 
-        buildStringEditor : function(template, value) {
+        addValidate : function(template, input) {
+            input.bind("blur", function() {
+                input.removeClass("invalid").removeClass("invalidHL");
+                if (template.validate && !new RegExp(template.validate).test(input.val())) {
+                    input.addClass("invalid");
+
+                    setTimeout(function(){
+                        input.addClass("invalidHL");
+                    }, 1);
+                }
+            });
+        },
+        addEnterControl : function(input) {
             var self = this;
+            input.bind("keyup", function(e) {
+                switch (e.keyCode) {
+                case 13: // Enter
+                    input.blur();
+                    self.nextFocus(input.get(0));
+                }
+            });
+        },
+        buildStringEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";
             var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
             var input = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6"' + placeholder + '>').addClass("stringEditor");
@@ -89,42 +110,31 @@
                 input.addClass("option");
             }
 
-            input.bind("blur", function() {
-                input.removeClass("invalid");
-                input.removeClass("invalidHL");
-                if (template.validate && !new RegExp(template.validate).test(input.val())) {
-                    input.addClass("invalid");
-
-                    setTimeout(function(){
-                        input.addClass("invalidHL");
-                    }, 1);
-                }
-            });
-            input.bind("keyup", function(e) {
-                switch (e.keyCode) {
-                case 13: // Enter
-                    input.blur();
-                    self.nextFocus(input.get(0));
-                }
-            });
-
+            this.addValidate(template, input);
+            this.addEnterControl(input);
             return input;
         },
         buildStringMultipleEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";
-            var tag = $('<textarea name="' + template.name + '" class="span6">' + val + '</textarea>').addClass("stringMultipleEditor");
+            var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
+            var input = $('<textarea name="' + template.name + '" class="span6"' + placeholder + '>' + val + '</textarea>').addClass("stringMultipleEditor");
             if (template.nullable === true) {
-                tag.addClass("nullable");
+                input.addClass("nullable");
             }
             if (template.option === true) {
-                tag.addClass("option");
+                input.addClass("option");
             }
-            return tag;
+            this.addValidate(template, input);
+            return input;
         },
         buildNumberEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : 0;
-            var tag = $('<input type="text" name="' + template.name + '" value="' + parseFloat(val, 10) + '" class="span6">').addClass("numberEditor");
-            return tag;
+            var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
+            var input = $('<input type="text" name="' + template.name + '" value="' + parseFloat(val, 10) + '" class="span6"' + placeholder + '>').addClass("numberEditor");
+
+            this.addValidate(template, input);
+            this.addEnterControl(input);
+            return input;
         },
         buildListEditor : function(template, value) {
             var max = template.max ? template.max : 0;

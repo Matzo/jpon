@@ -19,13 +19,12 @@ h1:after {
 
 #editor input.stringEditor {
 }
-#editor input {
-    background-color:#;
-}
+#editor textarea.invalid,
 #editor input.invalid {
     border:2px solid #fbb;
     background-color:#fee;
 }
+#editor textarea.invalidHL,
 #editor input.invalidHL {
     -webkit-animation-duration: 0.3s;
     -webkit-animation-name: highlight;

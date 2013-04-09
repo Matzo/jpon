@@ -151,6 +151,12 @@ $(function() {
         ok(result.hasClass("option"), "option");
     });
 
+    test("buildStringMultiEditor() placeholder", function() {
+        var result = editor.buildEditor({name:"date", type:"string", placeholder:"12345\nabcABC", validate:"^[0-9a-zA-Z]+$"});
+        equal(result.get(0).placeholder, '12345\nabcABC', "placeholder");
+    });
+
+
     test("buildNumberEditor()", function() {
         var result = editor.buildEditor({name:"date", type:"number"});
         equal(result.get(0).tagName, 'INPUT', "tagName");
@@ -661,13 +667,19 @@ $(function() {
         var pon = new jpon.Jpon({
             templateMaster:jpon.Templates
         });
-        pon.parseJSON('{"Number":"111","YYYY-MM-DD":"2013-04-13"}', "validate.json");
+        pon.parseJSON('{"Name":"First Last", "Address":"Japan\\nTokyo", "ZipCode":1112222, "YYYY-MM-DD":"2013-04-13"}', "validate.json");
         ok(pon.validate(), "valid");
 
-        pon.parseJSON('{"Number":"111a","YYYY-MM-DD":"2013-04-13"}', "validate.json");
+        pon.parseJSON('{"Name":"First Last_", "Address":"Japan\\nTokyo", "ZipCode":1112222, "YYYY-MM-DD":"2013-04-13"}', "validate.json");
         ok(!pon.validate(), "invalid");
 
-        pon.parseJSON('{"Number":"111","YYYY-MM-DD":"2013-04-131"}', "validate.json");
+        pon.parseJSON('{"Name":"First Last", "Address":"Japan\\nTokyo_", "ZipCode":1112222, "YYYY-MM-DD":"2013-04-13"}', "validate.json");
+        ok(!pon.validate(), "invalid");
+
+        pon.parseJSON('{"Name":"First Last", "Address":"Japan\\nTokyo", "ZipCode":"a1112222", "YYYY-MM-DD":"2013-04-13"}', "validate.json");
+        ok(!pon.validate(), "invalid");
+
+        pon.parseJSON('{"Name":"First Last", "Address":"Japan\\nTokyo", "ZipCode":1112222, "YYYY-MM-DD":"2013-04-130"}', "validate.json");
         ok(!pon.validate(), "invalid");
     });
 

@@ -157,10 +157,22 @@
                 type:"map",
                 value:[
                     {
-                        name:"Number",
+                        name:"Name",
+                        validate:"^[a-zA-Z0-9 ]+$",
+                        placeholder:"input your name",
+                        type:"string"
+                    },
+                    {
+                        name:"Address",
+                        validate:"^[a-zA-Z0-9 \n]+$",
+                        placeholder:"Country City",
+                        type:"string-multi"
+                    },
+                    {
+                        name:"ZipCode",
                         validate:"^[0-9]+$",
                         placeholder:"1234",
-                        type:"string"
+                        type:"number"
                     },
                     {
                         name:"YYYY-MM-DD",

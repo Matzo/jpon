@@ -118,7 +118,7 @@
         },
 
         validate : function() {
-            $("#editor input.stringEditor").blur();
+            $("#editor input.stringEditor, #editor input.numberEditor, #editor textarea.stringMultipleEditor").blur();
             if (0 < $("#editor .invalid").length) {
                 return false;
             } else {
