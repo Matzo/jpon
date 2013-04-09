@@ -9,8 +9,6 @@
         var self = this;
         this.options = $.extend({
             controllerId: "controller",
-            saveBtnId : "saveBtn",
-            displayBtnId : "displayBtn",
             loadSuccess : function(jsonString, filename) {
                 self.parseJSON(jsonString, filename);
             }
@@ -52,8 +50,10 @@
 
             // preview
             $("#displayBtn").click(function() {
-                var filename = self.options.selectedMaster ? self.options.selectedMaster.filename : "data.json";
-                self.storage.display(self.editor.buildJSONString(), filename);
+                if (self.validate()) {
+                    var filename = self.options.selectedMaster ? self.options.selectedMaster.filename : "data.json";
+                    self.storage.display(self.editor.buildJSONString(), filename);
+                }
                 return false;
             });
 
@@ -115,6 +115,15 @@
 
         escapeRegexp : function(pattern) {
             return pattern.replace(/([\$\^\*\(\)\+\[\]\\\|\?])/g, "\\$1");
+        },
+
+        validate : function() {
+            $("#editor input.stringEditor").blur();
+            if (0 < $("#editor .invalid").length) {
+                return false;
+            } else {
+                return true;
+            }
         },
 
         parseJSON : function(jsonString, filename) {

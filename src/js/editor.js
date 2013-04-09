@@ -40,6 +40,17 @@
             }
         },
 
+        nextFocus: function(current) {
+            var last;
+            $("#editor input.stringEditor").each(function(i, e) {
+                if (last == current) {
+                    $(e).focus();
+                    return;
+                }
+                last = e;
+            });
+        },
+
         /**
          * Editor
          */
@@ -67,15 +78,37 @@
         },
 
         buildStringEditor : function(template, value) {
+            var self = this;
             var val = value ? value : template.value ? template.value : "";
-            var tag = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6">').addClass("stringEditor");
+            var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
+            var input = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6"' + placeholder + '>').addClass("stringEditor");
             if (template.nullable === true) {
-                tag.addClass("nullable");
+                input.addClass("nullable");
             }
             if (template.option === true) {
-                tag.addClass("option");
+                input.addClass("option");
             }
-            return tag;
+
+            input.bind("blur", function() {
+                input.removeClass("invalid");
+                input.removeClass("invalidHL");
+                if (template.validate && !new RegExp(template.validate).test(input.val())) {
+                    input.addClass("invalid");
+
+                    setTimeout(function(){
+                        input.addClass("invalidHL");
+                    }, 1);
+                }
+            });
+            input.bind("keyup", function(e) {
+                switch (e.keyCode) {
+                case 13: // Enter
+                    input.blur();
+                    self.nextFocus(input.get(0));
+                }
+            });
+
+            return input;
         },
         buildStringMultipleEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";

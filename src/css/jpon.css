@@ -19,6 +19,41 @@ h1:after {
 
 #editor input.stringEditor {
 }
+#editor input {
+    background-color:#;
+}
+#editor input.invalid {
+    border:2px solid #fbb;
+    background-color:#fee;
+}
+#editor input.invalidHL {
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-name: highlight;
+    -webkit-animation-timing-function: ease-out;
+    animation-duration: 0.3s;
+    animation-name: highlight;
+    animation-timing-function: ease-out;
+}
+@keyframes highlight {
+    from {
+        border:2px solid #fbb;
+        background-color:#fdd;
+    }
+    to {
+        border:2px solid #fbb;
+        background-color:#fee;
+    }
+}
+@-webkit-keyframes highlight {
+    from {
+        border:2px solid #fbb;
+        background-color:#fdd;
+    }
+    to {
+        border:2px solid #fbb;
+        background-color:#fee;
+    }
+}
 
 #editor dl {
     margin:0px;

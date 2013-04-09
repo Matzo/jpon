@@ -38,6 +38,85 @@ $(function() {
         ok(result.hasClass("option"), "option");
     });
 
+    test("buildStringEditor() validate date", function() {
+        var result = editor.buildEditor({name:"date", type:"string", validate:"^[0-9]{4}/[0-9]{2}/[0-9]{2}$"});
+        result.focus();
+        result.val("2013/01/01");
+        result.blur();
+        ok(!result.hasClass("invalid"), "this is valid");
+
+        result.focus();
+        result.val("");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+
+        result.focus();
+        result.val("a2013/01/01");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+
+        result.focus();
+        result.val("2013/01/1");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+
+        result.focus();
+        result.val("2013/01/100");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+    });
+
+    test("buildStringEditor() validate number", function() {
+        var result = editor.buildEditor({name:"date", type:"string", validate:"^[0-9]+$"});
+        result.focus();
+        result.val("0");
+        result.blur();
+        ok(!result.hasClass("invalid"), "this is valid");
+
+        result.focus();
+        result.val("1234567890");
+        result.blur();
+        ok(!result.hasClass("invalid"), "this is valid");
+
+        result.focus();
+        result.val("");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+
+        result.focus();
+        result.val("1234567890a");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+
+        result.focus();
+        result.val("1234567890_");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+    });
+
+    test("buildStringEditor() validate alphanumeric", function() {
+        var result = editor.buildEditor({name:"date", type:"string", validate:"^[0-9a-zA-Z]+$"});
+        result.focus();
+        result.val("0aA");
+        result.blur();
+        ok(!result.hasClass("invalid"), "this is valid");
+
+        result.focus();
+        result.val("");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+
+        result.focus();
+        result.val("0aA_");
+        result.blur();
+        ok(result.hasClass("invalid"), "this is invalid");
+    });
+
+    test("buildStringEditor() placeholder", function() {
+        var result = editor.buildEditor({name:"date", type:"string", placeholder:"12345abcABC", validate:"^[0-9a-zA-Z]+$"});
+        equal(result.get(0).placeholder, '12345abcABC', "placeholder");
+    });
+
     test("buildStringMultiEditor()", function() {
         var result = editor.buildEditor({name:"date", type:"string-multi"});
         equal(result.get(0).tagName, 'TEXTAREA', "tagName");
@@ -577,6 +656,21 @@ $(function() {
             jpon.location = {};
         }
     });
+
+    test("buildJSON() validate", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        pon.parseJSON('{"Number":"111","YYYY-MM-DD":"2013-04-13"}', "validate.json");
+        ok(pon.validate(), "valid");
+
+        pon.parseJSON('{"Number":"111a","YYYY-MM-DD":"2013-04-13"}', "validate.json");
+        ok(!pon.validate(), "invalid");
+
+        pon.parseJSON('{"Number":"111","YYYY-MM-DD":"2013-04-131"}', "validate.json");
+        ok(!pon.validate(), "invalid");
+    });
+
     test("selectTemplate()", function() {
         var pon = new jpon.Jpon({
             templateMaster:jpon.Templates,

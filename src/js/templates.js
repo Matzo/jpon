@@ -148,6 +148,28 @@
                     { name:"bar", type:"string" }
                 ]
             }
+        },
+        // sample6
+        {
+            filename : "validate.json",
+            charset : "UTF-8",
+            template : {
+                type:"map",
+                value:[
+                    {
+                        name:"Number",
+                        validate:"^[0-9]+$",
+                        placeholder:"1234",
+                        type:"string"
+                    },
+                    {
+                        name:"YYYY-MM-DD",
+                        validate:"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                        placeholder:"1980-04-13",
+                        type:"string"
+                    }
+                ]
+            }
         }
     ];
 })(this.jQuery);
