@@ -99,8 +99,6 @@ h1:after {
     margin-bottom:10px;
 }
 #editor ul.listEditor > li {
-    list-style: decimal;
-    list-style-position: inside;
     list-style-type: none;
 }
 #editor ol.listEditor > li.ui-sortable-helper,
