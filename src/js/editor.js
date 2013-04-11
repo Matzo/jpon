@@ -147,7 +147,11 @@
             value = value || [];
 
             if (template.expandable) {
-                list.sortable({axis: "y", items:"> li.values"});
+                list.sortable({axis: "y", items:"> li.values",
+                    update:function(e, item) {
+                        self.updateListNumber(list);
+                    }
+                });
             }
 
             var loopMax = Math.max(min, len);
@@ -159,6 +163,7 @@
                 var li = $("<li class='values'></li>");
                 var item = self.buildEditor(liTemplate, value);
                 li.append(item);
+                li.prepend("<div class='listNumber'></div>");
 
                 if (template.expandable) {
                     var del = $("<div class='delBtn'>x</div>");
@@ -166,6 +171,7 @@
                         del.hide();
                         li.hide("fast", function() {
                             li.remove();
+                            self.updateListNumber(list);
                         });
                     });
                     li.prepend(del);
@@ -177,6 +183,8 @@
             for (i = 0; i < loopMax; i++) {
                 list.append(buildListItem(template.value, value[i]));
             }
+            this.updateListNumber(list);
+
 
             if (template.expandable) {
                 var more = $("<li class='moreBtn'>+</li>");
@@ -185,10 +193,18 @@
                     list.append(li);
                     li.hide().show("fast");
                     list.append(more);
+                    self.updateListNumber(list);
                 });
                 list.append(more);
             }
             return list;
+        },
+        updateListNumber : function(ul) {
+            var list = ul.children();
+            for (var i = 0; i < list.length; i++) {
+                var item = list.get(i);
+                $("div.listNumber", item).html(i + 1);
+            }
         },
         buildMapEditor : function(template, value) {
             var mapObj = $("<dl></dl>").addClass("dl-horizontal").addClass("mapEditor");
