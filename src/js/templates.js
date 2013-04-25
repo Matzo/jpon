@@ -182,6 +182,139 @@
                     }
                 ]
             }
+        },
+        // sample7
+        {
+            filename : "jails.json",
+            charset : "UTF-8",
+            template : {
+                type:"map",
+                value:[
+                    {
+                        name:"ab",
+                        type:"map",
+                            expandable:true,
+                            value:[
+                            {
+                                name:"UIViewController",
+                                type:"map",
+                                value:[
+                                    {
+                                        name:"assign",
+                                        type:"list",
+                                        min:2,
+                                        expandable:true,
+                                        value:{
+                                            type:"number"
+                                        }
+                                    },
+                                    {
+                                        name:"branches",
+                                        type:"list",
+                                        expandable:true,
+                                        option:true,
+                                        value:{
+                                            type:"map",
+                                            value:[
+                                                {
+                                                    name:"name",
+                                                    type:"string",
+                                                    placeholder:"a or b or c or .."
+                                                },
+                                                {
+                                                    name:"properties",
+                                                    type:"list",
+                                                    min:1,
+                                                    expandable:true,
+                                                    value:{
+                                                        type:"map",
+                                                        value:[
+                                                            {
+                                                                name:"name",
+                                                                type:"string"
+                                                            },
+                                                            {
+                                                                name:"backgroundColor",
+                                                                type:"list",
+                                                                min:4,
+                                                                max:4,
+                                                                value:{
+                                                                    type:"number"
+                                                                }
+                                                            },
+                                                            {
+                                                                name:"frame",
+                                                                type:"list",
+                                                                min:4,
+                                                                max:4,
+                                                                value:{
+                                                                    type:"string"
+                                                                }
+                                                            },
+                                                            {
+                                                                name:"text",
+                                                                type:"string"
+                                                            },
+                                                            {
+                                                                name:"selector",
+                                                                type:"string"
+                                                            },
+                                                            {
+                                                                name:"createSubviews",
+                                                                type:"list",
+                                                                expandable:true,
+                                                                value:{
+                                                                    type:"map",
+                                                                    value:[
+                                                                        {
+                                                                            name:"class",
+                                                                            type:"string"
+                                                                        },
+                                                                        {
+                                                                            name:"backgroundColor",
+                                                                            type:"list",
+                                                                            min:4,
+                                                                            max:4,
+                                                                            value:{
+                                                                                type:"number"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            name:"frame",
+                                                                            type:"list",
+                                                                            min:4,
+                                                                            max:4,
+                                                                            value:{
+                                                                                type:"string"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            name:"text",
+                                                                            type:"string"
+                                                                        },
+                                                                        {
+                                                                            name:"selector",
+                                                                            type:"string"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+
+                                            ]
+                                        }
+                                    }
+
+
+
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     ];
 })(this.jQuery);

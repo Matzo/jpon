@@ -480,7 +480,7 @@
             var list = [];
             var children = editor.children().filter(".values");
             for (var i = 0; i < children.size(); i++) {
-                var child = $(children.get(i)).children();
+                var child = $(children.get(i)).children().filter(".mapEditor,.listEditor,.numberEditor,.stringEditor,.stringMultipleEditor");
                 list.push(this.buildJSONRecursive(child));
             }
             return list;
