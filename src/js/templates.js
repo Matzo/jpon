@@ -271,6 +271,7 @@
                                                                 type:"list",
                                                                 expandable:true,
                                                                 value:{
+                                                                    listNumber:true,
                                                                     type:"map",
                                                                     value:[
                                                                         {
