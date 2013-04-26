@@ -161,9 +161,14 @@
 
             var buildListItem = function(liTemplate, value) {
                 var li = $("<li class='values'></li>");
+                if (liTemplate.width == "short") {
+                    li.addClass("short");
+                }
                 var item = self.buildEditor(liTemplate, value);
                 li.append(item);
-                li.prepend("<div class='listNumber'></div>");
+                if (liTemplate.listNumber) {
+                    li.prepend("<div class='listNumber'></div>");
+                }
 
                 if (template.expandable) {
                     var del = $("<div class='delBtn'>x</div>");
@@ -203,7 +208,7 @@
             var list = ul.children();
             for (var i = 0; i < list.length; i++) {
                 var item = list.get(i);
-                $("div.listNumber", item).html(i + 1);
+                $(">div.listNumber", item).html(i + 1);
             }
         },
         buildMapEditor : function(template, value) {

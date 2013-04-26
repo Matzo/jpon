@@ -17,8 +17,12 @@ h1:after {
 #editor {
 }
 
-#editor input.stringEditor {
+#editor textarea.stringMultipleEditor,
+#editor input.stringEditor,
+#editor input.numberEditor {
+    padding-left:30px;
 }
+
 #editor textarea.invalid,
 #editor input.invalid {
     border:2px solid #fbb;
@@ -100,6 +104,16 @@ h1:after {
 }
 #editor ul.listEditor > li {
     list-style-type: none;
+}
+#editor ul.listEditor > li.short {
+    width:100px;
+    display:inline-block;
+    margin-right:23px;
+}
+#editor ul.listEditor > li.short > input {
+    width:100px;
+    text-align:center;
+    padding-left:7px;
 }
 #editor ol.listEditor > li.ui-sortable-helper,
 #editor ul.listEditor > li.ui-sortable-helper {
@@ -206,6 +220,7 @@ footer {
     padding:5px;
     background-color:#fff;
     border-top:1px solid #eee;
+    z-index:1001;
 }
 
 #inputBox {

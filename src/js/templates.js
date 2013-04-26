@@ -205,6 +205,7 @@
                                         min:2,
                                         expandable:true,
                                         value:{
+                                            listNumber:true,
                                             type:"number"
                                         }
                                     },
@@ -212,21 +213,24 @@
                                         name:"branches",
                                         type:"list",
                                         expandable:true,
-                                        option:true,
                                         value:{
+                                            listNumber:true,
                                             type:"map",
                                             value:[
                                                 {
                                                     name:"name",
                                                     type:"string",
-                                                    placeholder:"a or b or c or .."
+                                                    option:true,
+                                                    placeholder:"a, b, c, or d or .."
                                                 },
                                                 {
                                                     name:"properties",
                                                     type:"list",
                                                     min:1,
                                                     expandable:true,
+                                                    option:true,
                                                     value:{
+                                                        listNumber:true,
                                                         type:"map",
                                                         value:[
                                                             {
@@ -239,6 +243,7 @@
                                                                 min:4,
                                                                 max:4,
                                                                 value:{
+                                                                    width:"short",
                                                                     type:"number"
                                                                 }
                                                             },
@@ -248,12 +253,14 @@
                                                                 min:4,
                                                                 max:4,
                                                                 value:{
+                                                                    width:"short",
+                                                                    placeholder:"+0.0",
                                                                     type:"string"
                                                                 }
                                                             },
                                                             {
                                                                 name:"text",
-                                                                type:"string"
+                                                                type:"string-multi"
                                                             },
                                                             {
                                                                 name:"selector",
@@ -276,6 +283,7 @@
                                                                             min:4,
                                                                             max:4,
                                                                             value:{
+                                                                                width:"short",
                                                                                 type:"number"
                                                                             }
                                                                         },
@@ -285,12 +293,14 @@
                                                                             min:4,
                                                                             max:4,
                                                                             value:{
+                                                                                width:"short",
+                                                                                placeholder:"0.0",
                                                                                 type:"string"
                                                                             }
                                                                         },
                                                                         {
                                                                             name:"text",
-                                                                            type:"string"
+                                                                            type:"string-multi"
                                                                         },
                                                                         {
                                                                             name:"selector",
