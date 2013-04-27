@@ -128,9 +128,12 @@
             return input;
         },
         buildNumberEditor : function(template, value) {
-            var val = value ? value : template.value ? template.value : 0;
+            var val = value !== undefined ? parseFloat(value, 10) : template.value ? template.value : "";
             var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
-            var input = $('<input type="text" name="' + template.name + '" value="' + parseFloat(val, 10) + '" class="span6"' + placeholder + '>').addClass("numberEditor");
+            var input = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6"' + placeholder + '>').addClass("numberEditor");
+            if (template.option) {
+                input.addClass("option");
+            }
 
             this.addValidate(template, input);
             this.addEnterControl(input);
@@ -143,6 +146,9 @@
             var self = this;
             var i;
             var list = $("<ul></ul>").addClass("listEditor");
+            if (template.option) {
+                list.addClass("option");
+            }
             list.data("template", template);
             value = value || [];
 
@@ -216,6 +222,9 @@
             var i, propTmpl, propName, propVal, dt;
             var key, val;
             var self = this;
+            if (template.option) {
+                mapObj.addClass("option");
+            }
             var keyEdit = function(_dt) {
                 if (0 < $("input", _dt).length) {
                     return;
@@ -458,7 +467,11 @@
             return result;
         },
         buildJSONFromNumber : function(editor) {
-            return parseFloat(editor.val(), 10);
+            if (editor.hasClass("option") && !editor.val()) {
+                return undefined;
+            } else {
+                return !editor.val() ? 0 : parseFloat(editor.val(), 10);
+            }
         },
         buildJSONFromBoolean : function(editor) {
             var result = $("input[type=radio]:checked", editor).val();
@@ -476,19 +489,33 @@
                 var key = $(children.get(i)).text();
                 var child = $(children.get(i+1)).children();
                 var value = this.buildJSONRecursive(child);
-                obj[key] = value;
+                if (!child.hasClass("option") || value !== undefined) {
+                    obj[key] = value;
+                }
             }
 
-            return obj;
+            if (editor.hasClass("option") && JSON.stringify(obj) == "{}") {
+                return undefined;
+            } else {
+                return obj;
+            }
         },
         buildJSONFromList : function(editor) {
             var list = [];
             var children = editor.children().filter(".values");
+            var editorClasses = ".mapEditor,.listEditor,.numberEditor,.stringEditor,.stringMultipleEditor";
             for (var i = 0; i < children.size(); i++) {
-                var child = $(children.get(i)).children().filter(".mapEditor,.listEditor,.numberEditor,.stringEditor,.stringMultipleEditor");
-                list.push(this.buildJSONRecursive(child));
+                var child = $(children.get(i)).children().filter(editorClasses);
+                var result = this.buildJSONRecursive(child);
+                if (!child.hasClass("option") || result !== undefined) {
+                    list.push(this.buildJSONRecursive(child));
+                }
             }
-            return list;
+            if (editor.hasClass("option") && list.length == 0) {
+                return undefined;
+            } else {
+                return list;
+            }
         },
         buildJSONFromSelect : function(editor) {
             var result = $("input[type=radio]:checked", editor).val();

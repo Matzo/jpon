@@ -611,6 +611,70 @@ $(function() {
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
 
+    test("option for list 1", function() {
+        editor.initEditor({
+            type:"map",
+            value:[
+                {
+                    name:"list",
+                    type:"list",
+                    min:3,
+                    value:{
+                        option:true,
+                        type:"string"
+                    }
+                }
+            ]
+        }, {
+            "list" : ["","",""]
+        });
+        var result = editor.buildJSON();
+        var expect = {"list":[]};
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("option for list 2", function() {
+        editor.initEditor({
+            type:"map",
+            value:[
+                {
+                    name:"list",
+                    type:"list",
+                    option:true,
+                    min:3,
+                    value:{
+                        option:true,
+                        type:"string"
+                    }
+                }
+            ]
+        }, {
+            "list" : ["","",""]
+        });
+        var result = editor.buildJSON();
+        var expect = {};
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("option for map", function() {
+        editor.initEditor({
+            type:"map",
+            value:[
+                {
+                    name:"data",
+                    type:"map",
+                    option:true,
+                    value:[
+                        { name:"key", option:true, type:"string" }
+                    ]
+                }
+            ]
+        });
+        var result = editor.buildJSON();
+        var expect = {};
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
     test("escape regexp", function() {
         var pon = new jpon.Jpon({
             templateMaster:jpon.Templates
