@@ -200,8 +200,8 @@
                                 type:"list",
                                 min:2,
                                 expandable:true,
+                                listNumber:true,
                                 value:{
-                                    listNumber:true,
                                     type:"number"
                                 }
                             },
@@ -209,8 +209,8 @@
                                 name:"branches",
                                 type:"list",
                                 expandable:true,
+                                listNumber:true,
                                 value:{
-                                    listNumber:true,
                                     type:"map",
                                     value:[
                                         {
@@ -223,9 +223,9 @@
                                             name:"properties",
                                             type:"list",
                                             expandable:true,
+                                            listNumber:true,
                                             option:true,
                                             value:{
-                                                listNumber:true,
                                                 type:"map",
                                                 value:[
                                                     {
@@ -236,11 +236,11 @@
                                                         name:"backgroundColor",
                                                         type:"list",
                                                         option:true,
+                                                        width:"short",
                                                         min:4,
                                                         max:4,
                                                         value:{
                                                             option:true,
-                                                            width:"short",
                                                             type:"number"
                                                         }
                                                     },
@@ -248,10 +248,10 @@
                                                         name:"frame",
                                                         type:"list",
                                                         option:true,
+                                                        width:"short",
                                                         min:4,
                                                         max:4,
                                                         value:{
-                                                            width:"short",
                                                             option:true,
                                                             placeholder:"+0.0",
                                                             type:"string"
@@ -263,8 +263,15 @@
                                                         type:"string-multi"
                                                     },
                                                     {
-                                                        name:"selector",
+                                                        name:"image",
                                                         option:true,
+                                                        placeholder:"URL or image path",
+                                                        type:"string"
+                                                    },
+                                                    {
+                                                        name:"action",
+                                                        option:true,
+                                                        placeholder:"URL or selector",
                                                         type:"string"
                                                     },
                                                     {
@@ -272,8 +279,8 @@
                                                         type:"list",
                                                         option:true,
                                                         expandable:true,
+                                                        listNumber:true,
                                                         value:{
-                                                            listNumber:true,
                                                             option:true,
                                                             type:"map",
                                                             value:[
@@ -288,8 +295,8 @@
                                                                     option:true,
                                                                     min:4,
                                                                     max:4,
+                                                                    width:"short",
                                                                     value:{
-                                                                        width:"short",
                                                                         option:true,
                                                                         type:"number"
                                                                     }
@@ -300,8 +307,8 @@
                                                                     option:true,
                                                                     min:4,
                                                                     max:4,
+                                                                    width:"short",
                                                                     value:{
-                                                                        width:"short",
                                                                         option:true,
                                                                         placeholder:"0.0",
                                                                         type:"string"
@@ -313,7 +320,14 @@
                                                                     type:"string-multi"
                                                                 },
                                                                 {
-                                                                    name:"selector",
+                                                                    name:"image",
+                                                                    option:true,
+                                                                    placeholder:"URL or image path",
+                                                                    type:"string"
+                                                                },
+                                                                {
+                                                                    name:"action",
+                                                                    placeholder:"URL or selector",
                                                                     option:true,
                                                                     type:"string"
                                                                 }

@@ -107,6 +107,9 @@
                 if (filename && filename == e.filename) {
                     self.options.template = e.template;
                     self.options.selectedMaster = e;
+                    if (self.storage) {
+                        self.storage.options.selectedMaster = e;
+                    }
                     return false;
                 }
             });

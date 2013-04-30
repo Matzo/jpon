@@ -17,10 +17,17 @@ h1:after {
 #editor {
 }
 
-#editor textarea.stringMultipleEditor,
-#editor input.stringEditor,
-#editor input.numberEditor {
+#editor .listNumber + textarea.stringMultipleEditor,
+#editor .listNumber + input.stringEditor,
+#editor .listNumber + input.numberEditor {
     padding-left:30px;
+}
+
+#editor input[type=text],
+#editor textarea {
+    width:80% !important;
+    margin-bottom:5px;
+    padding:2px 3px;
 }
 
 #editor textarea.invalid,
@@ -60,6 +67,7 @@ h1:after {
 
 #editor dl {
     margin:0px;
+    margin-bottom:10px;
 
     border-left: 8px solid lightgrey;
     border-top-left-radius:10px;
@@ -69,6 +77,12 @@ h1:after {
     border-left: 8px double lightgrey;
     border-top-left-radius:0px;
     border-bottom-left-radius:0px;
+}
+#editor dt {
+    width:130px;
+}
+#editor dd {
+    margin-left:140px;
 }
 #editor dl dl {
     padding:10px 0px;
@@ -94,24 +108,27 @@ h1:after {
 #editor ol,
 #editor ul {
     margin:0px;
+    margin-bottom:10px;
 }
 #editor ol.listEditor > li,
 #editor ul.listEditor > li {
     border-left: 0px solid lightgrey;
     border-top-left-radius:10px;
     border-bottom-left-radius:10px;
-    margin-bottom:10px;
 }
 #editor ul.listEditor > li {
     list-style-type: none;
 }
-#editor ul.listEditor > li.short {
+#editor ul.listEditor.short {
+    margin-bottom:0px;
+}
+#editor ul.listEditor.short > li {
     width:100px;
     display:inline-block;
-    margin-right:23px;
+    margin-right:0px;
 }
-#editor ul.listEditor > li.short > input {
-    width:100px;
+#editor ul.listEditor.short > li > input {
+    width:50px;
     text-align:center;
     padding-left:7px;
 }
@@ -127,6 +144,7 @@ h1:after {
 
 #editor ol.listEditor > li.moreBtn,
 #editor ul.listEditor > li.moreBtn {
+    width:80%;
     padding:5px;
     font-size: 20px;
     color:grey;
@@ -150,10 +168,10 @@ h1:after {
 
 #editor ul.listEditor > li > div.listNumber {
     position:absolute;
-    margin-top:5px;
+    margin-top:3px;
     margin-left:10px;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.4em;
     color:lightgrey;
 }
 #editor ol.listEditor li > div.delBtn,
@@ -262,3 +280,4 @@ header.page-header {
     padding-bottom: 25px;
     */
 }
+

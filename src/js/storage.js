@@ -65,7 +65,7 @@
             var self = this;
             this.options.file = file;
             var reader = new FileReader();
-            var charset = "UTF-8";
+            var charset = self.options.selectedMaster.charset || "UTF-8";
 
             $.each(self.options.templateMaster, function(i, master) {
                 if (file.name == master.filename) {
@@ -111,7 +111,7 @@
             outputBox.removeClass("invisible");
             $("#output").val(jsonString).focus().select();
 
-            if ($.browser.chrome && window.Blob) {
+            if ($.browser.chrome && window.Blob && this.options.selectedMaster.charset == "UTF-8") {
                 var bb = new Blob([jsonString]);
 
                 var url = window.URL || window.webkitURL;

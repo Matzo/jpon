@@ -756,6 +756,17 @@ $(function() {
         equal($("#selectedTemplateName").html(), "map_x_map.json");
     });
 
+    test("selectTemplate() same as storage", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates,
+            value: {}
+        });
+        pon.selectTemplate("map_x_map.json");
+        equal(pon.options.selectedMaster.filename, "map_x_map.json");
+        equal(pon.storage.options.selectedMaster.filename, "map_x_map.json");
+    });
+
+
     test("init with hash", function() {
         jpon.location.hash = "#prefix_suffix.json";
         var pon = new jpon.Jpon({

@@ -149,6 +149,9 @@
             if (template.option) {
                 list.addClass("option");
             }
+            if (template.width == "short") {
+                list.addClass("short");
+            }
             list.data("template", template);
             value = value || [];
 
@@ -167,12 +170,9 @@
 
             var buildListItem = function(liTemplate, value) {
                 var li = $("<li class='values'></li>");
-                if (liTemplate.width == "short") {
-                    li.addClass("short");
-                }
                 var item = self.buildEditor(liTemplate, value);
                 li.append(item);
-                if (liTemplate.listNumber) {
+                if (template.listNumber) {
                     li.prepend("<div class='listNumber'></div>");
                 }
 
