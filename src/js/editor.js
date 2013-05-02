@@ -329,6 +329,9 @@
             return function(template, value) {
                 var list = $("<ul></ul>").addClass("inline").addClass("booleanEditor");
                 //var list = $("<ul></ul>");
+                if (template.option) {
+                    list.addClass("option");
+                }
 
                 var items = ["true", "false"];
                 for (i = 0; i < items.length; i++) {
@@ -345,7 +348,9 @@
                 } else if (template.value === false) {
                     $("input[type=radio]", list).val(["false"]);
                 } else {
-                    $("input[type=radio]", list).val(["true"]);
+                    if (!template.option) {
+                        $("input[type=radio]", list).val(["true"]);
+                    }
                 }
                 radioCount++;
                 return list;
@@ -477,8 +482,14 @@
             var result = $("input[type=radio]:checked", editor).val();
             if (result == "true") {
                 return true;
-            } else {
+            } else if (result == "false") {
                 return false;
+            } else {
+                if (editor.hasClass("option")) {
+                    return undefined;
+                } else {
+                    return false;
+                }
             }
         },
         buildJSONFromMap : function(editor) {

@@ -275,6 +275,11 @@
                                                         type:"string"
                                                     },
                                                     {
+                                                        name:"hidden",
+                                                        option:true,
+                                                        type:"boolean"
+                                                    },
+                                                    {
                                                         name:"createSubviews",
                                                         type:"list",
                                                         option:true,
@@ -330,6 +335,11 @@
                                                                     placeholder:"URL or selector",
                                                                     option:true,
                                                                     type:"string"
+                                                                },
+                                                                {
+                                                                    name:"hidden",
+                                                                    option:true,
+                                                                    type:"boolean"
                                                                 }
                                                             ]
                                                         }

@@ -203,6 +203,13 @@ $(function() {
     });
 
 
+    test("buildBooleanEditor()", function() {
+        var result = editor.buildEditor({name:"foo", type:"boolean", option:true});
+
+        var checkedObj = $("input[type=radio]:checked", result);
+        equal(checkedObj.size(), 0, "not selected");
+    });
+
     test("buildMapEditor()", function() {
         var result = editor.buildEditor({name:"date", type:"map", value:[
             { name:"date",   type:"string" },
@@ -655,6 +662,34 @@ $(function() {
         var expect = {};
         equal(JSON.stringify(result), JSON.stringify(expect));
     });
+
+    test("option for boolean", function() {
+        editor.initEditor({
+            name:"foo",
+            type:"boolean",
+            option:true
+        });
+        var result = editor.buildJSON();
+        var expect = undefined;
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
+    test("option for boolean2", function() {
+        editor.initEditor({
+            type:"map",
+            value:[
+                {
+                    name:"foo",
+                    type:"boolean",
+                    option:true
+                }
+            ]
+        });
+        var result = editor.buildJSON();
+        var expect = {};
+        equal(JSON.stringify(result), JSON.stringify(expect));
+    });
+
 
     test("option for map", function() {
         editor.initEditor({
