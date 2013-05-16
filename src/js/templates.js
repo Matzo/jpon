@@ -214,7 +214,7 @@
                                     type:"map",
                                     value:[
                                         {
-                                            name:"name",
+                                            name:"branchName",
                                             type:"string",
                                             option:true,
                                             placeholder:"a, b, c, or d or .."
@@ -233,16 +233,10 @@
                                                         type:"string"
                                                     },
                                                     {
-                                                        name:"backgroundColor",
-                                                        type:"list",
+                                                        name:"background",
+                                                        type:"string",
                                                         option:true,
-                                                        width:"short",
-                                                        min:4,
-                                                        max:4,
-                                                        value:{
-                                                            option:true,
-                                                            type:"number"
-                                                        }
+                                                        placeholder:"hex color(#FFFFFF) or URL(image) or name(in Bundle)"
                                                     },
                                                     {
                                                         name:"frame",
@@ -261,12 +255,6 @@
                                                         name:"text",
                                                         option:true,
                                                         type:"string-multi"
-                                                    },
-                                                    {
-                                                        name:"image",
-                                                        option:true,
-                                                        placeholder:"URL or image path",
-                                                        type:"string"
                                                     },
                                                     {
                                                         name:"action",
@@ -295,16 +283,10 @@
                                                                     type:"string"
                                                                 },
                                                                 {
-                                                                    name:"backgroundColor",
-                                                                    type:"list",
+                                                                    name:"background",
+                                                                    type:"string",
                                                                     option:true,
-                                                                    min:4,
-                                                                    max:4,
-                                                                    width:"short",
-                                                                    value:{
-                                                                        option:true,
-                                                                        type:"number"
-                                                                    }
+                                                                    placeholder:"hex color(#FFFFFF) or URL(image) or name(in Bundle)"
                                                                 },
                                                                 {
                                                                     name:"frame",
@@ -325,21 +307,10 @@
                                                                     type:"string-multi"
                                                                 },
                                                                 {
-                                                                    name:"image",
-                                                                    option:true,
-                                                                    placeholder:"URL or image path",
-                                                                    type:"string"
-                                                                },
-                                                                {
                                                                     name:"action",
                                                                     placeholder:"URL or selector",
                                                                     option:true,
                                                                     type:"string"
-                                                                },
-                                                                {
-                                                                    name:"hidden",
-                                                                    option:true,
-                                                                    type:"boolean"
                                                                 }
                                                             ]
                                                         }
@@ -351,6 +322,139 @@
                                 }
                             }
                         ]
+                    }
+                ]
+            }
+        },
+        // sample8
+        {
+            filename : "jails.v2.json",
+            charset : "UTF-8",
+            template : {
+                type:"map",
+                expandable:true,
+                value:[
+                    {
+                        name:"UIViewController",
+                        type:"list",
+                        expandable:true,
+                        listNumber:true,
+                        min:1,
+                        value:{
+                            type:"map",
+                            value:[
+                                {
+                                    name:"ratio",
+                                    placeholder:"0-100",
+                                    type:"number"
+                                },
+                                {
+                                    name:"branchName",
+                                    type:"string",
+                                    option:true,
+                                    placeholder:"a, b, or c or .."
+                                },
+                                {
+                                    name:"properties",
+                                    type:"list",
+                                    expandable:true,
+                                    listNumber:true,
+                                    option:true,
+                                    value:{
+                                        type:"map",
+                                        value:[
+                                            {
+                                                name:"name",
+                                                type:"string"
+                                            },
+                                            {
+                                                name:"background",
+                                                type:"string",
+                                                option:true,
+                                                placeholder:"hex color(#FFFFFF) or URL(image) or name(in Bundle)"
+                                            },
+                                            {
+                                                name:"frame",
+                                                type:"list",
+                                                option:true,
+                                                width:"short",
+                                                min:4,
+                                                max:4,
+                                                value:{
+                                                    option:true,
+                                                    placeholder:"+0.0",
+                                                    type:"string"
+                                                }
+                                            },
+                                            {
+                                                name:"text",
+                                                option:true,
+                                                type:"string-multi"
+                                            },
+                                            {
+                                                name:"action",
+                                                option:true,
+                                                placeholder:"URL or selector",
+                                                type:"string"
+                                            },
+                                            {
+                                                name:"hidden",
+                                                option:true,
+                                                type:"boolean"
+                                            },
+                                            {
+                                                name:"createSubviews",
+                                                type:"list",
+                                                option:true,
+                                                expandable:true,
+                                                listNumber:true,
+                                                value:{
+                                                    option:true,
+                                                    type:"map",
+                                                    value:[
+                                                        {
+                                                            name:"class",
+                                                            option:true,
+                                                            type:"string"
+                                                        },
+                                                        {
+                                                            name:"background",
+                                                            type:"string",
+                                                            option:true,
+                                                            placeholder:"hex color(#FFFFFF) or URL(image) or name(in Bundle)"
+                                                        },
+                                                        {
+                                                            name:"frame",
+                                                            type:"list",
+                                                            option:true,
+                                                            min:4,
+                                                            max:4,
+                                                            width:"short",
+                                                            value:{
+                                                                option:true,
+                                                                placeholder:"0.0",
+                                                                type:"string"
+                                                            }
+                                                        },
+                                                        {
+                                                            name:"text",
+                                                            option:true,
+                                                            type:"string-multi"
+                                                        },
+                                                        {
+                                                            name:"action",
+                                                            placeholder:"URL or selector",
+                                                            option:true,
+                                                            type:"string"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
                     }
                 ]
             }
