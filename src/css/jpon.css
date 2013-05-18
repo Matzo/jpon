@@ -22,6 +22,10 @@ h1:after {
 #editor .listNumber + input.numberEditor {
     padding-left:30px;
 }
+#editor input[type=radio],
+#editor input[type=checkbox] {
+    margin-right:5px;
+}
 
 #editor input[type=text],
 #editor textarea {

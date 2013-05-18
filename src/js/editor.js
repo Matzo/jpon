@@ -102,7 +102,7 @@
         buildStringEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";
             var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
-            var input = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6"' + placeholder + '>').addClass("stringEditor");
+            var input = $('<input type="text" name="' + template.name + '" class="span6"' + placeholder + '>').val(val).addClass("stringEditor");
             if (template.nullable === true) {
                 input.addClass("nullable");
             }
@@ -117,7 +117,7 @@
         buildStringMultipleEditor : function(template, value) {
             var val = value ? value : template.value ? template.value : "";
             var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
-            var input = $('<textarea name="' + template.name + '" class="span6"' + placeholder + '>' + val + '</textarea>').addClass("stringMultipleEditor");
+            var input = $('<textarea name="' + template.name + '" class="span6"' + placeholder + '></textarea>').val(val).addClass("stringMultipleEditor");
             if (template.nullable === true) {
                 input.addClass("nullable");
             }
@@ -130,7 +130,7 @@
         buildNumberEditor : function(template, value) {
             var val = value !== undefined ? parseFloat(value, 10) : template.value ? template.value : "";
             var placeholder = template.placeholder ? ' placeholder="' + template.placeholder + '"' : "";
-            var input = $('<input type="text" name="' + template.name + '" value="' + val + '" class="span6"' + placeholder + '>').addClass("numberEditor");
+            var input = $('<input type="text" name="' + template.name + '" class="span6"' + placeholder + '>').val(val).addClass("numberEditor");
             if (template.option) {
                 input.addClass("option");
             }
@@ -230,7 +230,7 @@
                     return;
                 }
                 var _orgName = _dt.html();
-                var _input = $('<input type="text" value="' + _orgName + '" class="span2">');
+                var _input = $('<input type="text" class="span2">').val(_orgName);
                 var _newKey;
                 _dt.html("");
                 _dt.append(_input);
@@ -339,7 +339,8 @@
                     var name = template.name + '_' + radioCount;
                     var id = name + '_' + i;
                     var val = items[i];
-                    var radio = $('<label for="' + id + '"><input type="radio" id="' + id + '" name="' + name + '" value="' + val + '"> ' + val + '</label>');
+                    var input = $('<input type="radio" id="' + id + '" name="' + name + '">').val(val);
+                    var radio = $('<label for="' + id + '"></label>').text(val).prepend(input);
                     li.append(radio);
                     list.append(li);
                 }
@@ -367,7 +368,8 @@
                     var name = template.name + '_' + radioCount;
                     var id = name + '_' + i;
                     var val = template.value[i];
-                    var radio = $('<label for="' + id + '"><input type="radio" id="' + id + '" name="' + name + '" value="' + val + '"> ' + (val?val:'""') + '</label>');
+                    var input = $('<input type="radio" id="' + id + '" name="' + name + '">').val(val);
+                    var radio = $('<label for="' + id + '"></label>').text(val?val:'""').prepend(input);
                     li.append(radio);
                     list.append(li);
                 }
@@ -391,7 +393,8 @@
                     var name = template.name + '_' + checkboxCount;
                     var id = name + '_' + i;
                     var val = template.value[i];
-                    var checkbox = $('<label for="' + id + '"><input type="checkbox" id="' + id + '" name="' + name + '" value="' + val + '"> ' + (val?val:'""') + '</label>');
+                    var input = $('<input type="checkbox" id="' + id + '" name="' + name + '">').val(val);
+                    var checkbox = $('<label for="' + id + '"></label>').text(val?val:'""').prepend(input);
                     li.append(checkbox);
                     list.append(li);
                 }

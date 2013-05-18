@@ -753,6 +753,26 @@ $(function() {
         equal(pon.editor.buildJSONString(), "var data = {\"test\":$(\"#id\").val()+\"1234567890!@#$%^&*()~-_=+[{]}\\|;:'\\\",<.>/?\"};\nvar json = {\"foo\":\"\",\"bar\":\"\"};\nvar data2 = {\"aaa\":[1,2,3]};");
     });
 
+    test("URL encode", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        var jsonString = '{"Shift_JIS String":{"foo":"http://localhost/test?a=b&amp;param1=param1","bar":"bbb"}}';
+        pon.parseJSON(jsonString, "multibyte.json");
+
+        equal(pon.editor.buildJSONString(), jsonString);
+    });
+
+    test("URL encode string-multi", function() {
+        var pon = new jpon.Jpon({
+            templateMaster:jpon.Templates
+        });
+        var jsonString = '{"custom":{"2012/01/01":{"title":"","description":"http://localhost/test?a=b&amp;param1=param1","score":0,"type":null,"attributes":[],"foo":true}}}';
+        pon.parseJSON(jsonString, "expandable_map.json");
+
+        equal(pon.editor.buildJSONString(), jsonString);
+    });
+
     module("Jpon", {
         setup : function() {
             jpon.location = {};
