@@ -185,7 +185,7 @@
         },
         // sample7
         {
-            filename : "jails.json",
+            filename : "jails-0_1.json",
             charset : "UTF-8",
             template : {
                 type:"map",
@@ -202,6 +202,7 @@
                                 expandable:true,
                                 listNumber:true,
                                 value:{
+                                    validate:"^([0-9]{1,2}|100)$",
                                     type:"number"
                                 }
                             },
@@ -328,7 +329,7 @@
         },
         // sample8
         {
-            filename : "jails.v2.json",
+            filename : "jails-0_2.json",
             charset : "UTF-8",
             template : {
                 type:"map",
@@ -345,6 +346,7 @@
                             value:[
                                 {
                                     name:"ratio",
+                                    validate:"^([0-9]{1,2}|100)$",
                                     placeholder:"0-100",
                                     type:"number"
                                 },
@@ -365,6 +367,7 @@
                                         value:[
                                             {
                                                 name:"name",
+                                                validate:"^[a-zA-Z_][a-zA-Z-_0-9]*$",
                                                 type:"string"
                                             },
                                             {
