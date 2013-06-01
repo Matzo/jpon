@@ -1,6 +1,8 @@
+var jpon;
 (function($) {
+    "use strict";
     if (!$) return;
-    if (!this.jpon) this.jpon = {};
+    if (!jpon) jpon = {};
     if (jpon.Jpon) return;
 
     jpon.location = location;
@@ -22,7 +24,7 @@
         $(window).bind("hashchange", function() {
             self.initWithHash();
         });
-    }
+    };
 
     jpon.Jpon.prototype = {
         initEditor : function(template, value) {
@@ -142,5 +144,5 @@
 //            this.editor.updatePrefix(prefix);
 //            this.editor.updateSuffix(suffix);
         }
-    }
+    };
 })(this.jQuery);
