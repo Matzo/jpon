@@ -315,7 +315,6 @@ $(function() {
         equal(resultTitle.get(2).value, "");
     });
 
-
     test("buildSelectEditor()", function() {
         var result = editor.buildEditor({name:"type", type:"select", value:["window", "iframe", ""]});
 

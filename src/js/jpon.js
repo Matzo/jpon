@@ -1,7 +1,8 @@
+var jpon;
 (function($) {
     "use strict";
     if (!$) return;
-    if (!this.jpon) this.jpon = {};
+    if (!jpon) jpon = {};
     if (jpon.Jpon) return;
 
     jpon.location = location;
