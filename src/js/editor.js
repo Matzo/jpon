@@ -12,7 +12,7 @@
             prefixId : "prefix",
             suffixId : "suffix"
         }, options);
-    }
+    };
 
     jpon.Editor.prototype = {
         initEditor : function(template, value) {
@@ -56,7 +56,7 @@
          */
         buildEditor : function(template, value) {
             var result = null;
-            var template = template || {};
+            template = template || {};
             if (template.type == "string") {
                 result = this.buildStringEditor(template, value);
             } else if (template.type == "string-multi") {
@@ -179,6 +179,9 @@
                 if (template.expandable) {
                     var del = $("<div class='delBtn'>x</div>");
                     del.click(function() {
+                        if(min !== 0 && list.children('.values').length <= min){
+                            return;
+                        }
                         del.hide();
                         li.hide("fast", function() {
                             li.remove();
@@ -189,7 +192,7 @@
                     del.hide().show("fast");
                 }
                 return li;
-            }
+            };
 
             for (i = 0; i < loopMax; i++) {
                 list.append(buildListItem(template.value, value[i]));
@@ -200,6 +203,9 @@
             if (template.expandable) {
                 var more = $("<li class='moreBtn'>+</li>");
                 more.click(function() {
+                    if(max !== 0 && list.children('.values').length >= max){
+                        return;
+                    }
                     var li = buildListItem(template.value);
                     list.append(li);
                     li.hide().show("fast");
@@ -290,7 +296,7 @@
                     dt.next().hide().slideDown(100);
                 });
                 mapObj.append(more);
-            }
+            };
             if (template.expandable && value) {
                 for (propName in value) {
                     if (value.hasOwnProperty(propName)) {
@@ -355,7 +361,7 @@
                 }
                 radioCount++;
                 return list;
-            }
+            };
         })(),
         buildSelectEditor : (function() {
             var radioCount = 0;
@@ -380,7 +386,7 @@
                 }
                 radioCount++;
                 return list;
-            }
+            };
         })(),
         buildSelectMultipleEditor : (function() {
             var checkboxCount = 0;
@@ -405,7 +411,7 @@
                 }
                 checkboxCount++;
                 return list;
-            }
+            };
         })(),
 
         buildPrefixEditor : function(master) {
@@ -525,7 +531,7 @@
                     list.push(this.buildJSONRecursive(child));
                 }
             }
-            if (editor.hasClass("option") && list.length == 0) {
+            if (editor.hasClass("option") && list.length === 0) {
                 return undefined;
             } else {
                 return list;
@@ -549,6 +555,6 @@
         unescapeHtml : function(pattern) {
             return pattern.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
         }
-    }
+    };
 
 })(this.jQuery);
